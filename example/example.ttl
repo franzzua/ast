@@ -1,0 +1,94 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix tsast: <https://raw.githubusercontent.com/franzzua/ast/refs/heads/main/ast.ttl#> . # Using the defined ontology namespace
+@prefix global: <https://raw.githubusercontent.com/franzzua/ast/refs/heads/main/global.ttl#> .
+
+# Base URI for this specific code snippet representation
+@base <https://raw.githubusercontent.com/franzzua/ast/refs/heads/main/example/example.ttl#> .
+
+# --- Source File Node ---
+<#sourceFile> a tsast:SourceFile ;
+              tsast:sourceFileName "example.ts"^^xsd:string ; # Example file name
+              # Statements in the source file (order NOT guaranteed by RDF model here)
+              tsast:hasStatement <#funcDecl_sayHello> ;
+              tsast:hasStatement <#call_sayHello_World> .
+
+# --- Function Declaration: function sayHello(...) { ... } ---
+<#funcDecl_sayHello> a tsast:FunctionDeclaration ;
+                     tsast:hasName <#ident_funcName_sayHello> ;
+                     # Parameters (order NOT guaranteed if multiple parameters existed)
+                     tsast:hasParameter <#param_to> ;
+                     # Function Body
+                     tsast:hasStatement <#exprStmt_consoleLog> ;
+                     tsast:lineNumber 1 . # Example line number
+
+# --- Function Name Identifier ---
+<#ident_funcName_sayHello> a tsast:Identifier ;
+                           tsast:textValue "sayHello"^^xsd:string .
+
+# --- Parameter Declaration: to: string ---
+<#param_to> a tsast:ParameterDeclaration ;
+            tsast:hasName <#ident_paramName_to> ;
+            tsast:hasType <#type_string> .
+
+# --- Parameter Name Identifier ---
+<#ident_paramName_to> a tsast:Identifier ;
+                      tsast:textValue "to"^^xsd:string .
+
+# --- Parameter Type Annotation ---
+<#type_string> a tsast:TypeNode ; # Could be refined e.g., tsast:StringKeyword
+               rdfs:label "string" . # Simple label representing the type 'string'
+
+# --- Expression Statement: console.log(...) ---
+<#exprStmt_consoleLog> a tsast:CallExpression ;
+                       tsast:hasExpression <#call_consoleLog> ;
+                       tsast:lineNumber 3 . # Example line number
+
+# --- Call Expression: console.log(...) ---
+<#call_consoleLog> a tsast:MethodCallExpression ;
+                   tsast:hasTarget global:console ;
+                   tsast:hasMember global:log ;
+                   # Arguments (order NOT guaranteed if multiple arguments existed)
+                   tsast:hasArgument <#binaryExpr_helloTo> .
+
+# --- Identifier: console ---
+<#ident_console> a tsast:Identifier ;
+                 tsast:textValue "console"^^xsd:string .
+
+# --- Identifier: log ---
+<#ident_log> a tsast:Identifier ;
+             tsast:textValue "log"^^xsd:string .
+
+# --- Binary Expression: 'Hello ' + to ---
+<#binaryExpr_helloTo> a tsast:BinaryExpression ;
+                      tsast:hasLeftOperand <#literal_hello> ;
+                      tsast:hasOperatorToken global:op_plus ; # Representing the '+' operator
+                      tsast:hasRightOperand <#ident_use_to> . # Identifier 'to' used in expression
+
+# --- String Literal: 'Hello ' ---
+<#literal_hello> a tsast:StringLiteral ;
+                 tsast:textValue "Hello " .
+
+
+# --- Identifier (Usage): to ---
+<#ident_use_to> a tsast:Identifier ;
+                tsast:textValue "to"^^xsd:string .
+# Note: Linking this usage (<#ident_use_to>) to its declaration (<#param_to>)
+# would typically require symbol analysis beyond basic AST structure.
+
+# --- Call Expression: sayHello('World') ---
+<#call_sayHello_World> a tsast:CallExpression ;
+                       tsast:hasExpression <#ident_call_sayHello> ;
+                       # Arguments (order NOT guaranteed if multiple arguments existed)
+                       tsast:hasArgument <#literal_World> .
+
+# --- Identifier (Usage): sayHello ---
+<#ident_call_sayHello> a tsast:Identifier ;
+                       tsast:textValue "sayHello"^^xsd:string .
+# Note: Linking this usage (<#ident_call_sayHello>) to its declaration (<#funcDecl_sayHello>)
+# would typically require symbol analysis.
+
+# --- String Literal: 'World' ---
+<#literal_World> a tsast:StringLiteral ;
+                 tsast:textValue "World" .

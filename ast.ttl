@@ -42,6 +42,10 @@ tsast:MethodDeclaration a owl:Class ;
                         rdfs:subClassOf tsast:Declaration ; # Or a more specific tsast:ClassElement
                         rdfs:label "Method Declaration" .
 
+tsast:FunctionDeclaration a owl:Class ;
+                        rdfs:subClassOf tsast:Declaration ;
+                        rdfs:label "Function Declaration" .
+
 tsast:VariableStatement a owl:Class ;
                         rdfs:subClassOf tsast:Statement ;
                         rdfs:label "Variable Statement" .
@@ -70,6 +74,10 @@ tsast:CallExpression a owl:Class ;
                      rdfs:subClassOf tsast:Expression ;
                      rdfs:label "Call Expression" .
 
+tsast:MethodCallExpression a owl:Class ;
+                     rdfs:subClassOf tsast:CallExpression ;
+                     rdfs:label "Method call Expression" .
+
 tsast:ParameterDeclaration a owl:Class ;
                            rdfs:subClassOf tsast:Declaration ;
                            rdfs:label "Parameter Declaration" .
@@ -82,6 +90,8 @@ tsast:IfStatement a owl:Class ;
                   rdfs:subClassOf tsast:Statement ;
                   rdfs:label "If Statement" .
 
+tsast:BinaryOperator a owl:Class ;
+                     rdfs:subClassOf tsast:BinaryExpression .
 # ... many more node kinds would be defined here (FunctionDeclaration, InterfaceDeclaration, etc.)
 
 # --- Datatype Properties (Node Attributes) ---
@@ -152,7 +162,7 @@ tsast:hasDeclaration a owl:ObjectProperty ;
 tsast:hasMember a owl:ObjectProperty ;
                 rdfs:label "Has Member" ;
                 rdfs:comment "Relates a class or interface to its members (methods, properties)." ;
-                rdfs:domain [ owl:unionOf (tsast:ClassDeclaration tsast:InterfaceDeclaration) ] ; # Example domain
+                rdfs:domain [ owl:unionOf (tsast:ClassDeclaration ) ] ; # Example domain
                 rdfs:range tsast:Node . # Range could be refined to tsast:ClassElement or similar
 
 tsast:hasParameter a owl:ObjectProperty ;
@@ -160,6 +170,12 @@ tsast:hasParameter a owl:ObjectProperty ;
                    rdfs:comment "Relates a function or method declaration to its parameters." ;
                    rdfs:domain tsast:Node ; # Should be refined (e.g., FunctionLikeDeclarationBase)
                    rdfs:range tsast:ParameterDeclaration .
+
+tsast:hasTarget    a            owl:ObjectProperty ;
+                    rdfs:label   "Has Callee" ;
+                    rdfs:comment "Relates a call expression to its arguments." ;
+                    rdfs:domain  tsast:MethodCallExpression ;
+                    rdfs:range   tsast:Expression .
 
 tsast:hasArgument a owl:ObjectProperty ;
                   rdfs:label "Has Argument" ;
