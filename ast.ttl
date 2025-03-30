@@ -1,0 +1,218 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix tsast: <http://example.org/ontology/tsast#> . # Choose a suitable namespace URI
+
+# Ontology Definition
+tsast: a owl:Ontology ;
+       rdfs:label "TypeScript Abstract Syntax Tree Ontology" ;
+       rdfs:comment "An ontology to describe the structure and components of a TypeScript AST." ;
+       owl:versionInfo "0.1.0" .
+
+# --- Core Classes ---
+
+# Base class for all AST nodes
+tsast:Node a owl:Class ;
+           rdfs:label "AST Node" ;
+           rdfs:comment "The base class for any node in the TypeScript Abstract Syntax Tree." .
+
+# --- Top-Level Structure ---
+
+tsast:SourceFile a owl:Class ;
+                 rdfs:subClassOf tsast:Node ;
+                 rdfs:label "Source File" ;
+                 rdfs:comment "Represents the root node of a parsed TypeScript source file." .
+
+# --- Node Kinds (Examples - A full ontology would have many more) ---
+
+# Major Categories (can be used for grouping)
+tsast:Declaration a owl:Class ; rdfs:subClassOf tsast:Node .
+tsast:Statement a owl:Class ; rdfs:subClassOf tsast:Node .
+tsast:Expression a owl:Class ; rdfs:subClassOf tsast:Node .
+tsast:TypeNode a owl:Class ; rdfs:subClassOf tsast:Node .
+tsast:LiteralExpression a owl:Class ; rdfs:subClassOf tsast:Expression .
+
+# Specific Node Kinds
+tsast:ClassDeclaration a owl:Class ;
+                       rdfs:subClassOf tsast:Declaration ;
+                       rdfs:label "Class Declaration" .
+
+tsast:MethodDeclaration a owl:Class ;
+                        rdfs:subClassOf tsast:Declaration ; # Or a more specific tsast:ClassElement
+                        rdfs:label "Method Declaration" .
+
+tsast:VariableStatement a owl:Class ;
+                        rdfs:subClassOf tsast:Statement ;
+                        rdfs:label "Variable Statement" .
+
+tsast:VariableDeclaration a owl:Class ;
+                          rdfs:subClassOf tsast:Declaration ;
+                          rdfs:label "Variable Declaration" .
+
+tsast:Identifier a owl:Class ;
+                 rdfs:subClassOf tsast:Expression ; # Identifiers can be expressions
+                 rdfs:label "Identifier" .
+
+tsast:StringLiteral a owl:Class ;
+                    rdfs:subClassOf tsast:LiteralExpression ;
+                    rdfs:label "String Literal" .
+
+tsast:NumericLiteral a owl:Class ;
+                     rdfs:subClassOf tsast:LiteralExpression ;
+                     rdfs:label "Numeric Literal" .
+
+tsast:BinaryExpression a owl:Class ;
+                       rdfs:subClassOf tsast:Expression ;
+                       rdfs:label "Binary Expression" .
+
+tsast:CallExpression a owl:Class ;
+                     rdfs:subClassOf tsast:Expression ;
+                     rdfs:label "Call Expression" .
+
+tsast:ParameterDeclaration a owl:Class ;
+                           rdfs:subClassOf tsast:Declaration ;
+                           rdfs:label "Parameter Declaration" .
+
+tsast:Block a owl:Class ;
+            rdfs:subClassOf tsast:Statement ;
+            rdfs:label "Block Statement" .
+
+tsast:IfStatement a owl:Class ;
+                  rdfs:subClassOf tsast:Statement ;
+                  rdfs:label "If Statement" .
+
+# ... many more node kinds would be defined here (FunctionDeclaration, InterfaceDeclaration, etc.)
+
+# --- Datatype Properties (Node Attributes) ---
+
+tsast:startPosition a owl:DatatypeProperty ;
+                    rdfs:label "Start Position" ;
+                    rdfs:comment "The zero-based starting character index of the node in the source file." ;
+                    rdfs:domain tsast:Node ;
+                    rdfs:range xsd:integer .
+
+tsast:endPosition a owl:DatatypeProperty ;
+                  rdfs:label "End Position" ;
+                  rdfs:comment "The zero-based ending character index (exclusive) of the node in the source file." ;
+                  rdfs:domain tsast:Node ;
+                  rdfs:range xsd:integer .
+
+tsast:textValue a owl:DatatypeProperty ;
+                rdfs:label "Text Value" ;
+                rdfs:comment "The textual content of a node, typically for Identifiers and Literals." ;
+                rdfs:domain tsast:Node ; # More specific domains like (tsast:Identifier | tsast:LiteralExpression) could be used with OWL unions
+                rdfs:range xsd:string .
+
+tsast:flags a owl:DatatypeProperty ;
+            rdfs:label "Node Flags" ;
+            rdfs:comment "Numeric flags representing modifiers and characteristics (e.g., Export, Async, Public)." ;
+            rdfs:domain tsast:Node ;
+            rdfs:range xsd:integer . # Could also be modeled as separate boolean properties or linked resources
+
+tsast:sourceFileName a owl:DatatypeProperty ;
+                     rdfs:label "Source File Name";
+                     rdfs:comment "The name or path of the source file this node belongs to.";
+                     rdfs:domain tsast:SourceFile ; # Primarily associated with the root node
+                     rdfs:range xsd:string .
+
+tsast:lineNumber a owl:DatatypeProperty;
+                 rdfs:label "Line Number";
+                 rdfs:comment "The 1-based line number where the node starts in the source file.";
+                 rdfs:domain tsast:Node;
+                 rdfs:range xsd:integer .
+
+tsast:columnNumber a owl:DatatypeProperty;
+                   rdfs:label "Column Number";
+                   rdfs:comment "The 1-based column number where the node starts in the source file.";
+                   rdfs:domain tsast:Node;
+                   rdfs:range xsd:integer .
+
+# --- Object Properties (Relationships Between Nodes) ---
+
+tsast:hasParent a owl:ObjectProperty ;
+                rdfs:label "Has Parent" ;
+                rdfs:comment "Relates a node to its parent node in the AST." ;
+                rdfs:domain tsast:Node ;
+                rdfs:range tsast:Node .
+# Could consider owl:inverseOf tsast:hasChild if defined generally, but specific properties are often better.
+
+tsast:hasStatement a owl:ObjectProperty ;
+                   rdfs:label "Has Statement" ;
+                   rdfs:comment "Relates a container (like SourceFile or Block) to its contained statements. Order might need RDF lists if significant." ;
+                   rdfs:domain [ owl:unionOf (tsast:SourceFile tsast:Block) ] ; # Example domain using union
+                   rdfs:range tsast:Statement .
+
+tsast:hasDeclaration a owl:ObjectProperty ;
+                     rdfs:label "Has Declaration" ;
+                     rdfs:comment "Relates a VariableStatement to its VariableDeclaration(s)." ;
+                     rdfs:domain tsast:VariableStatement ;
+                     rdfs:range tsast:VariableDeclaration .
+
+tsast:hasMember a owl:ObjectProperty ;
+                rdfs:label "Has Member" ;
+                rdfs:comment "Relates a class or interface to its members (methods, properties)." ;
+                rdfs:domain [ owl:unionOf (tsast:ClassDeclaration tsast:InterfaceDeclaration) ] ; # Example domain
+                rdfs:range tsast:Node . # Range could be refined to tsast:ClassElement or similar
+
+tsast:hasParameter a owl:ObjectProperty ;
+                   rdfs:label "Has Parameter" ;
+                   rdfs:comment "Relates a function or method declaration to its parameters." ;
+                   rdfs:domain tsast:Node ; # Should be refined (e.g., FunctionLikeDeclarationBase)
+                   rdfs:range tsast:ParameterDeclaration .
+
+tsast:hasArgument a owl:ObjectProperty ;
+                  rdfs:label "Has Argument" ;
+                  rdfs:comment "Relates a call expression to its arguments." ;
+                  rdfs:domain tsast:CallExpression ;
+                  rdfs:range tsast:Expression .
+
+tsast:hasExpression a owl:ObjectProperty ;
+                    rdfs:label "Has Expression" ;
+                    rdfs:comment "Relates a node (like CallExpression, ReturnStatement) to its main expression." ;
+                    rdfs:domain tsast:Node ; # Domain varies (CallExpression, ExpressionStatement, IfStatement condition, etc.)
+                    rdfs:range tsast:Expression .
+
+tsast:hasLeftOperand a owl:ObjectProperty ;
+                     rdfs:label "Has Left Operand" ;
+                     rdfs:comment "Relates a binary expression to its left operand." ;
+                     rdfs:domain tsast:BinaryExpression ;
+                     rdfs:range tsast:Expression .
+
+tsast:hasRightOperand a owl:ObjectProperty ;
+                      rdfs:label "Has Right Operand" ;
+                      rdfs:comment "Relates a binary expression to its right operand." ;
+                      rdfs:domain tsast:BinaryExpression ;
+                      rdfs:range tsast:Expression .
+
+tsast:hasOperatorToken a owl:ObjectProperty ;
+                       rdfs:label "Has Operator Token" ;
+                       rdfs:comment "Relates a binary expression to its operator token node." ;
+                       rdfs:domain tsast:BinaryExpression ;
+                       rdfs:range tsast:Node . # Could be refined to specific operator token types
+
+tsast:hasName a owl:ObjectProperty ;
+              rdfs:label "Has Name" ;
+              rdfs:comment "Relates a declaration (class, function, variable) to its identifier name." ;
+              rdfs:domain tsast:Declaration ; # Approximate domain
+              rdfs:range tsast:Identifier .
+
+tsast:hasType a owl:ObjectProperty ;
+              rdfs:label "Has Type" ;
+              rdfs:comment "Relates a declaration (variable, parameter, property) or expression to its type annotation node or inferred type." ;
+              rdfs:domain tsast:Node ; # Varies widely
+              rdfs:range tsast:TypeNode . # Or potentially a class representing inferred types
+
+tsast:hasNextStatement a owl:ObjectProperty ;
+                       rdfs:label "Has Next Statement" ;
+                       rdfs:comment "Relates an IfStatement to its 'else' branch statement.";
+                       rdfs:domain tsast:IfStatement;
+                       rdfs:range tsast:Statement.
+
+tsast:hasThenStatement a owl:ObjectProperty ;
+                       rdfs:label "Has Then Statement" ;
+                       rdfs:comment "Relates an IfStatement to its 'then' branch statement.";
+                       rdfs:domain tsast:IfStatement;
+                       rdfs:range tsast:Statement.
+
+# ... many more object properties would be defined here (e.g., hasDecorator, hasHeritageClause, hasTypeParameter, hasBody, etc.)
