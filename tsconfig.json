@@ -1,0 +1,6 @@
+{
+  "extends": "@cmmn/tools/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "."
+  }
+}
