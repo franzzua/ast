@@ -11,15 +11,22 @@ export const schema = [
     },
     {
         "@type": "Class",
-        "@id": "Span",
-        "@abstract": [],
-        "start": "xsd:integer",
-        "end": "xsd:integer",
+        "@id": "Module",
+        "nodes": {
+            "@type": "Set",
+            "@class": "Node",
+        }
+    },
+    {
+        "@type": "Class",
+        "@id": "Node",
+        "@abstract": []
     },
     {
         "@type": "Class",
         "@id": "Program",
         "@key": {"@type": "Random"},
+        '@inherits': "Node",
         "body": {
             "@type": "Set",
             "@class": "Statement"
@@ -29,6 +36,7 @@ export const schema = [
     {
         "@type": "Class",
         "@id": "Statement",
+        '@inherits': "Node",
         "@abstract": []
     },
     {
@@ -56,7 +64,8 @@ export const schema = [
             "@type": "Enum",
             "@id": "VariableKind",
             "@value": ["var", "let", "const"]
-        }
+        },
+        "declare": "xsd:boolean"
     },
     {
         "@type": "Class",
@@ -68,7 +77,8 @@ export const schema = [
         "init": {
             "@type": "Optional",
             "@class": "Expression"
-        }
+        },
+        "definite": "xsd:boolean"
     },
     {
         "@type": "Class",
@@ -111,6 +121,7 @@ export const schema = [
     {
         "@type": "Class",
         "@id": "Expression",
+        "@inherits": ["Node"],
         "@abstract": []
     },
     {
@@ -119,7 +130,7 @@ export const schema = [
         "@inherits": ["Expression"],
         "callee": {
             "@type": "Optional",
-            "@class": "Expression"
+            "@class": "FunctionDeclaration"
         },
         "arguments": {
             "@type": "Set",

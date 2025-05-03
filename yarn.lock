@@ -532,7 +532,7 @@ __metadata:
 
 "@cmmn/tools@file:../cmmn/tools::locator=ast%40workspace%3A.":
   version: 3.0.0-beta-6
-  resolution: "@cmmn/tools@file:../cmmn/tools#../cmmn/tools::hash=900bb3&locator=ast%40workspace%3A."
+  resolution: "@cmmn/tools@file:../cmmn/tools#../cmmn/tools::hash=4befd7&locator=ast%40workspace%3A."
   dependencies:
     "@biomejs/biome": "npm:1.9.4"
     "@chialab/esbuild-plugin-html": "npm:^0.18.2"
@@ -574,7 +574,7 @@ __metadata:
     vite-tsconfig-paths: "npm:^5.1.4"
   bin:
     cmmn: dist/esm/bin.js
-  checksum: 10c0/91c65c1714006420531fb3a17112d9f5a58ba85d64bd922e5ace31f22e7067085f802846268beea518b38f7558a74deadf29c1d779fb459b1218cc250097ecfd
+  checksum: 10c0/aa907da0c9877bb8d5e543e83cc2e67804a023b91a9f5c2b12141fdbdaad85e5651768d425d3fa3439eb4fde54e5e17b6d51efc3808f36f8849172a6bbc672e0
   languageName: node
   linkType: hard
 
@@ -2496,6 +2496,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^20":
+  version: 20.17.32
+  resolution: "@types/node@npm:20.17.32"
+  dependencies:
+    undici-types: "npm:~6.19.2"
+  checksum: 10c0/2461df36f67704f68db64d33abc5ad00b4b35ac94e996adff88c7322f9572e3e60ddaeed7e9f34ae203120d2ba36cc931fd3a8ddddf0c63943e8600c365c6396
+  languageName: node
+  linkType: hard
+
 "@types/stack-utils@npm:^2.0.0":
   version: 2.0.3
   resolution: "@types/stack-utils@npm:2.0.3"
@@ -2864,6 +2873,7 @@ __metadata:
   dependencies:
     "@cmmn/tools": "file:../cmmn/tools"
     "@terminusdb/terminusdb-client": "npm:^10.0.33"
+    "@types/node": "npm:^20"
     oxc-parser: "npm:0.67.0"
     typescript: "npm:^5.8.3"
   languageName: unknown
@@ -8141,7 +8151,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~6.19.8":
+"undici-types@npm:~6.19.2, undici-types@npm:~6.19.8":
   version: 6.19.8
   resolution: "undici-types@npm:6.19.8"
   checksum: 10c0/078afa5990fba110f6824823ace86073b4638f1d5112ee26e790155f481f2a868cc3e0615505b6f4282bdf74a3d8caad715fd809e870c2bb0704e3ea6082f344
