@@ -1,7 +1,8 @@
 import {describe, test} from "node:test"
 import {Client} from "../src/client";
-import {NodeParser} from "../src/node";
 import { expect } from "@cmmn/tools/test";
+import {Serializer} from "../src/serializer";
+import {parseAsync} from "oxc-parser";
 
 const code = `
 const world = 'World';
@@ -12,31 +13,35 @@ function sayHello(to: string) {
 }
 `;
 
-describe('hello', () => {
-    const parser = new NodeParser();
+describe('hello', async () => {
 
-    test('parse', async () => {
+    await test('parse', async () => {
         const filename = 'test.tsx';
         const client = new Client();
-        const result = await parser.parse(filename, code);
-        console.table(result);
-        for (let node of result) {
-            expect(node["@id"]).toContain(node["@type"]);
-            switch (node["@type"]){
-                // case "Program":
-                //     const ids = node.body as string[];
-                //     expect(ids).toHaveLength(3);
-                //     const sayHelloCall = result.find(x => x["@id"] === ids[0]);
-                //     expect(sayHelloCall["@id"]).toContain('ExpressionStatement');
-                //     const sayHello = result.find(x => x["@id"] === ids[1]);
-                //     expect(sayHello["@id"]).toContain('FunctionDeclaration');
-                //     const sayHelloBody = result.find(x => x["@id"] === sayHello.body);
-                //     expect(sayHello.params).toHaveLength(1);
-                //     const toParam = result.find(x => x["@id"] === sayHello.params[0]);
-                //     expect(toParam["@id"]).toContain('Identifier');
-                //     break;
-            }
-        }
-        await client.add(result);
+        const parseResult = await parseAsync(filename, code);
+        if (parseResult.errors.length) throw parseResult.errors;
+        await client.add(parseResult.program, filename);
+    });
+
+    await test('serialize', async () => {
+        const client = new Client();
+        const program = await client.getProgram('test.tsx');
+        expect(program.body).toHaveLength(3);
+        const [vd, expression, fd] = program.body;
+        expect(vd.type).toEqual("VariableDeclaration");
+        if (vd.type !== "VariableDeclaration") throw new Error("VariableDeclaration is required");
+        if (expression.type !== "ExpressionStatement") throw new Error("Expression is required");
+        if (expression.expression.type !== 'CallExpression') throw new Error("CallExpression is required");
+        if (expression.expression.arguments[0] !== vd.declarations[0].id)
+            throw new Error("Identifier is different");
+        if (fd.type !== "FunctionDeclaration") throw new Error("FunctionDeclaration is required");
+        if (fd.body.body[0].type !== 'ExpressionStatement') throw new Error("ExpressionStatement is required");
+        if (fd.body.body[0].expression.type !== 'CallExpression') throw new Error("CallExpression is required");
+        if (fd.body.body[0].expression.arguments[0].type !== 'BinaryExpression') throw new Error("Parameter differs");
+        if (fd.body.body[0].expression.arguments[0].right !== fd.params[0]) throw new Error("Parameter differs");
+
+        const ser = new Serializer();
+        const serialized = ser.serialize(program);
+        expect(serialized.replace(/\s+/g, ' ')).toEqual(code.replace(/\s+/g, ' ').trim());
     });
 });

@@ -28,10 +28,11 @@ export const schema = [
         "@key": {"@type": "Random"},
         '@inherits': "Node",
         "body": {
-            "@type": "Set",
-            "@class": "Statement"
+            "@type": "List",
+            "@class": "Node"
         },
-        "sourceType": "xsd:string"
+        "sourceType": "xsd:string",
+        "name": "xsd:string"
     },
     {
         "@type": "Class",
@@ -70,6 +71,7 @@ export const schema = [
     {
         "@type": "Class",
         "@id": "VariableDeclarator",
+        "@inherits": ["Node"],
         "id": {
             "@type": "Optional",
             "@class": "Identifier"
@@ -258,6 +260,7 @@ export const schema = [
     {
         "@type": "Class",
         "@id": "TSTypeAnnotation",
+        "@inherits": ["Node"],
         "typeAnnotation": {
             "@type": "Optional",
             "@class": "TSType"
@@ -266,6 +269,7 @@ export const schema = [
     {
         "@type": "Class",
         "@id": "TSType",
+        "@inherits": ["Node"],
         "@abstract": []
     },
     {
