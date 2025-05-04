@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "parser.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test --import @swc-node/register/esm-register ./specs/hello.spec.ts"
   },
   "type": "module",
   "repository": {
@@ -17,18 +17,15 @@
   },
   "dependencies": {
     "@terminusdb/terminusdb-client": "10.0.33",
-    "eslint-scope": "8.3.0",
-    "espree": "10.3.0",
-    "oxc-walker": "^0.2.5"
+    "oxc-parser": "0.68.0",
+    "oxc-walker": "0.2.5"
   },
   "homepage": "https://github.com/franzzua/ast#readme",
   "description": "",
   "packageManager": "yarn@4.9.1+sha512.f95ce356460e05be48d66401c1ae64ef84d163dd689964962c6888a9810865e39097a5e9de748876c2e0bf89b232d583c33982773e9903ae7a76257270986538",
   "devDependencies": {
-    "@cmmn/tools": "file:../cmmn/tools",
-    "@types/eslint-scope": "^3.7.7",
-    "@types/espree": "^10.1.0",
-    "@types/estree": "^1.0.5",
+    "@swc-node/register": "1.10.10",
+    "@swc/core": "1.11.24",
     "typescript": "^5.3.3"
   }
 }

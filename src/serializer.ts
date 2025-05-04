@@ -1,4 +1,6 @@
-import {Node, ParamPattern} from "oxc-parser"
+import {Node, ParamPattern, TSLiteralType} from "oxc-parser"
+import {TypedNode} from "./dataNode";
+import {TSType} from "@oxc-project/types";
 
 const skipped = new Set(['@id', '@type']);
 
@@ -6,7 +8,7 @@ export class Serializer {
     constructor() {
     }
 
-    public serialize = (node: Node | ParamPattern): string => {
+    public serialize = (node: TypedNode<Node>): string => {
         switch (node.type) {
             case "Program":
                 return node.body.map(this.serialize).join("\n\n");
@@ -16,7 +18,6 @@ export class Serializer {
                 return `${this.serialize(node.id)} = ${this.serialize(node.init)}`;
             case "Identifier":
                 return node.name;
-            case 'TSStringKeyword': return 'string';
             case "Literal":
                 return node.raw;
             case "ExpressionStatement":
@@ -32,9 +33,15 @@ export class Serializer {
             case "MemberExpression":
                 return this.serialize(node.object) + '.' + this.serialize(node.property);
             case "BinaryExpression":
-                return this.serialize(node.left) + node.operator + this.serialize(node.right);
+                return this.serialize(node.left) + ' ' + node.operator + ' '+ this.serialize(node.right);
             default:
                 return node.type;
+        }
+    }
+
+    public serializeTS(node: TSType): string {
+        switch (node.type) {
+            case 'TSStringKeyword': return 'string';
         }
     }
 
@@ -42,7 +49,7 @@ export class Serializer {
         switch (node.type) {
             case "Identifier":
                 if (node.typeAnnotation)
-                    return `${node.name}: ${this.serialize(node.typeAnnotation.typeAnnotation)}`;
+                    return `${node.name}: ${this.serializeTS(node.typeAnnotation.typeAnnotation)}`;
                 return node.name;
         }
     }

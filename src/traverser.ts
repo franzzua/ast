@@ -3,7 +3,7 @@ import {Scope} from "./scope";
 import {BindingIdentifier, IdentifierName, IdentifierReference, Program} from "oxc-parser";
 import {walk} from "oxc-walker";
 import {randomBytes} from "node:crypto";
-import {Node} from "./node";
+import {INode} from "./dataNode";
 type Identifier = BindingIdentifier | IdentifierName | IdentifierReference;
 
 export class Traverser {
@@ -97,8 +97,8 @@ export class Traverser {
         return `${node.type}/${randomBytes(8).toString('base64')}`
     }
 
-    public getNodes(): Node[] {
-        const map = new Map<string, Node>();
+    public getNodes(): INode[] {
+        const map = new Map<string, INode>();
         walk(this.program, {
             enter: (node, parent, ctx) => {
                 const id = this.ids.get(node);
@@ -106,7 +106,7 @@ export class Traverser {
                     const result = {
                         '@id': id,
                         '@type': node.type,
-                    } as Node;
+                    } as INode;
                     for (let key in node) {
                         if (skip.has(key)) continue;
                         result[key] = node[key];
