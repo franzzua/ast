@@ -1,7 +1,11 @@
 export const StringLiteral = {
     "@type": "Class",
     "@id": "StringLiteral",
-    "value": "xsd:string",
+    "@inherits": "Span",
+    "value": {
+        "@type": "Optional",
+        "@class": "xsd:string"
+    },
     "raw": {
         "@type": "Optional",
         "@class": "xsd:string"

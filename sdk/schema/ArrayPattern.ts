@@ -1,6 +1,7 @@
 export const ArrayPattern = {
     "@type": "Class",
     "@id": "ArrayPattern",
+    "@inherits": "Span",
     "elements": {
         "@type": "List",
         "@class": "Node"

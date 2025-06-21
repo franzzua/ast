@@ -1,7 +1,11 @@
 export const NumericLiteral = {
     "@type": "Class",
     "@id": "NumericLiteral",
-    "value": "xsd:double",
+    "@inherits": "Span",
+    "value": {
+        "@type": "Optional",
+        "@class": "xsd:double"
+    },
     "raw": {
         "@type": "Optional",
         "@class": "xsd:string"

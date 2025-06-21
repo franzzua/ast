@@ -1,6 +1,7 @@
 export const AssignmentTargetRest = {
     "@type": "Class",
     "@id": "AssignmentTargetRest",
+    "@inherits": "Span",
     "argument": "Node",
     "decorators": {
         "@type": "Set",

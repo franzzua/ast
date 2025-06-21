@@ -1,6 +1,7 @@
 export const AssignmentPattern = {
     "@type": "Class",
     "@id": "AssignmentPattern",
+    "@inherits": "Span",
     "left": "Node",
     "right": "Node",
     "decorators": {

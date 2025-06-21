@@ -11,6 +11,9 @@ for (let nodeFile of nodeFiles) {
 }
 const ids = new Set(nodes.map(x => x['@id']))
 console.log(nodes.length, ids.size);
+// for (let node of nodes) {
+// 	delete node['kind'];
+// }
 export const schema = [
 	{
 		"@type": "@context",

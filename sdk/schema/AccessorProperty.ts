@@ -1,6 +1,7 @@
 export const AccessorProperty = {
     "@type": "Class",
     "@id": "AccessorProperty",
+    "@inherits": "Span",
     "type": {
         "@type": "Enum",
         "@id": "AccessorPropertyType",

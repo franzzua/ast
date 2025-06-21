@@ -1,7 +1,11 @@
 export const BigIntLiteral = {
     "@type": "Class",
     "@id": "BigIntLiteral",
-    "value": "xsd:string",
+    "@inherits": "Span",
+    "value": {
+        "@type": "Optional",
+        "@class": "xsd:string"
+    },
     "raw": {
         "@type": "Optional",
         "@class": "xsd:string"

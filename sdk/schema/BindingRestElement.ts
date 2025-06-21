@@ -1,6 +1,7 @@
 export const BindingRestElement = {
     "@type": "Class",
     "@id": "BindingRestElement",
+    "@inherits": "Span",
     "argument": "Node",
     "decorators": {
         "@type": "Set",

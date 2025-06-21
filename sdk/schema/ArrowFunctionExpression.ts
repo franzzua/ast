@@ -1,6 +1,7 @@
 export const ArrowFunctionExpression = {
     "@type": "Class",
     "@id": "ArrowFunctionExpression",
+    "@inherits": "Span",
     "id": {
         "@type": "Optional",
         "@class": "Node"

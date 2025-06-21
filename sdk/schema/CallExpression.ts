@@ -1,6 +1,7 @@
 export const CallExpression = {
     "@type": "Class",
     "@id": "CallExpression",
+    "@inherits": "Span",
     "callee": "Node",
     "arguments": {
         "@type": "List",

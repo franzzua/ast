@@ -1,6 +1,7 @@
 export const BindingIdentifier = {
     "@type": "Class",
     "@id": "BindingIdentifier",
+    "@inherits": "Span",
     "name": "xsd:string",
     "decorators": {
         "@type": "Set",

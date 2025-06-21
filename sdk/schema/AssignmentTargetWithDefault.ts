@@ -1,6 +1,7 @@
 export const AssignmentTargetWithDefault = {
     "@type": "Class",
     "@id": "AssignmentTargetWithDefault",
+    "@inherits": "Span",
     "left": "Node",
     "right": "Node",
     "decorators": {

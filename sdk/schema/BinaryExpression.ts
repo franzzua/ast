@@ -1,6 +1,7 @@
 export const BinaryExpression = {
     "@type": "Class",
     "@id": "BinaryExpression",
+    "@inherits": "Span",
     "left": "Node",
     "operator": {
         "@type": "Enum",

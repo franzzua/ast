@@ -1,6 +1,14 @@
 export const RegExpLiteral = {
     "@type": "Class",
     "@id": "RegExpLiteral",
-    "pattern": "Node",
-    "flags": "xsd:string"
+    "@inherits": "Span",
+    "value": {
+        "@type": "Optional",
+        "@class": "xsd:string"
+    },
+    "raw": {
+        "@type": "Optional",
+        "@class": "xsd:string"
+    },
+    "regex": "Node"
 }; 
