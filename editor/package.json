@@ -1,29 +1,19 @@
 {
-  "name": "ast",
+  "name": "@ast/editor",
   "version": "1.0.0",
-  "main": "parser.ts",
-  "scripts": {
-    "compile": "cmmn compile --watch",
-    "start": "cmmn dev"
-  },
   "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/franzzua/ast.git"
   },
-  "workspaces": [
-    "sdk",
-    "editor",
-    "cli"
-  ],
+  "module": "index.html",
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/franzzua/ast/issues"
   },
   "devDependencies": {
-    "@cmmn/tools": "3.0.0-beta-A",
-    "tiny-parse-argv": "^2.8.2"
+    "@cmmn/uhtml": "3.0.0-beta-A"
   },
   "homepage": "https://github.com/franzzua/ast#readme",
   "description": "",

@@ -1,5 +1,5 @@
-import {WOQLClient} from "@terminusdb/terminusdb-client";
-import {schema} from "./oxc-ast";
+import {WOQLClient, UTILS} from "@terminusdb/terminusdb-client";
+import {schema} from "../schema";
 import {INode, DataNode, TypedNode} from "./dataNode";
 import {Program, Node as OxcNode} from "oxc-parser";
 import {Traverser} from "./traverser";
@@ -32,8 +32,14 @@ export class Client {
         const traverser = new Traverser(program);
         const nodes = traverser.getNodes();
         nodes.find(x => x["@type"] === "Program")['name'] = fileName;
-        await this.init();
-        await this.client.addDocument(nodes, {}, 'ast', 'init');
+        try {
+            await this.client.addDocument(nodes, {}, 'ast', 'init');
+        }catch (e){
+            for (let error of e.data?.['api:error']?.['api:witnesses'] ?? []){
+                console.log(JSON.stringify(error, null, '  '));
+            }
+            throw new Error(`Failed to write to database`);
+        }
     }
 
     async getLastCommitDiff(){

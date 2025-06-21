@@ -1,0 +1,11 @@
+{
+  "name": "@ast/cli",
+  "version": "1.0.0",
+  "bin": {
+    "ast": "dist/esm/bin.js"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@ast/sdk": "workspace:*"
+  }
+}

@@ -8,7 +8,7 @@ const code = `
 const world = 'World';
 sayHello(world);
 
-function sayHello(to: string) {
+export function sayHello(to: string) {
   console.log('Hello ' + to);
 }
 `;
@@ -20,6 +20,7 @@ describe('hello', async () => {
         const filename = 'test.tsx';
         const parseResult = await parseAsync(filename, code);
         if (parseResult.errors.length) throw parseResult.errors;
+        await client.init();
         await client.add(parseResult.program, filename);
     });
 
