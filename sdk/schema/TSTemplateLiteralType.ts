@@ -1,11 +1,11 @@
-export const TemplateLiteral = {
+export const TSTemplateLiteralType = {
     "@type": "Class",
-    "@id": "TemplateLiteral",
+    "@id": "TSTemplateLiteralType",
     "quasis": {
         "@type": "List",
-        "@class": "TemplateElement"
+        "@class": "Node"
     },
-    "expressions": {
+    "types": {
         "@type": "List",
         "@class": "Node"
     }

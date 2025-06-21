@@ -1,6 +1,6 @@
 export const TemplateElement = {
     "@type": "Class",
     "@id": "TemplateElement",
-    "value": "Node",
+    "value": "TemplateElementValue",
     "tail": "xsd:boolean"
 }; 
