@@ -16,6 +16,7 @@
     "url": "https://github.com/franzzua/ast/issues"
   },
   "dependencies": {
+    "@swc/core": "1.12.6",
     "@terminusdb/terminusdb-client": "10.0.33",
     "oxc-parser": "0.68.0",
     "oxc-walker": "0.2.5"
