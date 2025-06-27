@@ -10,7 +10,7 @@ export class Client {
 	private readonly client = new WOQLClient('http://localhost:6364', {
 		user: 'admin',
 		key: 'root',
-		db: 'ast'
+		db: 'ast',
 	});
 
 	async init(): Promise<void> {
@@ -50,10 +50,11 @@ export class Client {
 	}
 
 	async add(program: Module, fileName: string): Promise<void> {
-		const converted = this.convert(program);
+		const converted = this.convert(program) as Module;
 		// const traverser = new Traverser(program);
 		// const nodes = traverser.getNodes();
 		// nodes.find(x => x["@type"] === "Program")['name'] = fileName;
+		converted['@id'] = 'Module/'+fileName;
 		try {
 			await this.client.addDocument(converted, {}, 'ast', 'init');
 		} catch (e) {
@@ -64,11 +65,15 @@ export class Client {
 			throw new Error(`Failed to write to database: \n` + errors.join('\n'));
 		}
 	}
-	convert(node: Node, expectedType: string){
+	convert(node: Node, parent: Node = null, key: string = null){
 		if (!node) return node;
-		node.type ??= expectedType;
-		if (!node.type)
-			throw new Error(`Node without type:\n ${JSON.stringify(node, null, ' ')}`)
+		if (!node.type) {
+			const parentSchema = this.getSchema(parent.type);
+			node.type = parentSchema[key]['@class'] ?? parentSchema[key];
+			if (!node.type) {
+				throw new Error(`Node without type:\n ${JSON.stringify(node, null, ' ')}`)
+			}
+		}
 		const res = {
 			'@type': node.type,
 			'@id': `${node.type}/${randomBytes(8).toString('base64')}`,
@@ -81,23 +86,47 @@ export class Client {
 			if (!value || typeof value !== "object")
 				res[key] = value;
 			else if (Array.isArray(value)) {
-				const expectedType = schema[key]?.['@class'];
-				res[key] = value.map(x => this.convert(x, expectedType));
+				res[key] = value.map(x => this.convert(x, node, key));
 			} else {
-				if (!value.type && schema[key])
-					value.type = schema[key];
-				res[key] = this.convert(value, schema[key]);
+				res[key] = this.convert(value, node, key);
 			}
 		}
 		for (let schemaKey in schema) {
 			if (schemaKey.startsWith('@')) continue;
-			if (res[schemaKey]) continue;
+			if (res[schemaKey] != null) continue;
 			if (schema[schemaKey] == 'xsd:string')
-				res[schemaKey] = '';
+				res[schemaKey] = '<NULL>';
 			if (schema[schemaKey] == 'xsd:double')
-				res[schemaKey] = 0;
+				res[schemaKey] = -1;
 			if (schema[schemaKey] == 'xsd:boolean')
 				res[schemaKey] = false;
+		}
+		return res;
+	}
+
+	async convertBack(node: any){
+		if (!node) return node;
+		if (typeof node === "string" && node.includes('/')){
+			return await this.getNode(node);
+		}
+		if (typeof node !== "object")
+			return node;
+		const res = {
+			type: node['@type'],
+		};
+		for (let key in node){
+			if (key.startsWith('@')) continue;
+			const value = node[key]
+			if (value === -1) continue;
+			if (value === '<NULL>') { res[key] = null; continue; }
+			if (Array.isArray(value)) {
+				res[key] = [];
+				for (let i = 0; i < value.length; i++) {
+					res[key][i] = await this.convertBack(value[i]);
+				}
+			} else {
+				res[key] = await this.convertBack(value);
+			}
 		}
 		return res;
 	}
@@ -123,18 +152,27 @@ export class Client {
 		return diff;
 	}
 
-	async getProgram(fileName: string) {
-		const program = await this.client.getDocument({
-			type: 'Program',
-			query: {
-				name: fileName
-			},
-			unfold: false
-		}) as Module;
-		return program;
+	async getModule(fileName: string) {
+		return this.getNode('Module/'+fileName);
+	}
+	async getNode(id: string) {
+		let tryCount = 0;
+		while (!this.cache[id]) {
+			try {
+				this.cache[id] ??= await this.client.getDocument({
+					query: {
+						'@id': id
+					},
+					type: id.split('/')[0],
+				}) as Node;
+			} catch (e) {
+				tryCount++;
+			}
+		}
+		return await this.convertBack(this.cache[id]);
 	}
 
-	private cache = new Map<string, DataNode>();
+	private cache: Record<string, Node> = {};
 	//
 	// async getOxcNode<TNode extends OxcNode>(node: INode<TNode> | string): Promise<DataNode<TNode>> {
 	// 	if (!node) return node as any;

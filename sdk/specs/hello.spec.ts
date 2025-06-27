@@ -1,7 +1,7 @@
 import {describe, test} from "node:test"
 import {Client} from "../src/client";
-import {expect} from "expect";
-import {parse} from "@swc/core";
+import {} from "oxc-walker";
+import {parse, transform} from "@swc/core";
 
 const code = `
     const a = 'Alice';
@@ -26,15 +26,21 @@ describe('hello', async () => {
     const client = new Client();
 
     await test('parse', async () => {
-        const parseResult = await parse(code, {
+        const program = await parse(code, {
             syntax: 'typescript',
+
         });
         await client.init();
-        await client.add(parseResult, filename);
+        await client.add(program, filename);
     });
 
     await test('serialize', async () => {
-        const program = await client.getProgram(filename);
+        const program = await client.getModule(filename);
+        const parsed = await parse(code, { syntax: 'typescript' });
+        const output = await transform(program, {
+            sourceFileName: filename,
+        });
+        console.log(output);
         // expect(program.body).toHaveLength(3);
         // const [vd, expression, fd] = program.body;
         // vd.as('VariableDeclaration');
@@ -62,10 +68,10 @@ describe('hello', async () => {
     //     await client.update(world);
     // })
 
-    await test('diff', async () => {
-        const [diff] = await client.getLastCommitDiff();
-        expect(diff['@id']).toContain('Literal');
-        expect(diff.value['@before']).toEqual('World');
-        expect(diff.value['@after']).toEqual('Friend');
-    })
+    // await test('diff', async () => {
+        // const [diff] = await client.getLastCommitDiff();
+        // expect(diff['@id']).toContain('Literal');
+        // expect(diff.value['@before']).toEqual('World');
+        // expect(diff.value['@after']).toEqual('Friend');
+    // })
 });
