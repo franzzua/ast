@@ -4,11 +4,21 @@ import {expect} from "expect";
 import {parse} from "@swc/core";
 
 const code = `
-    const a = 1;
+    const a = 'Alice';
+    abstract class Animal<T> {
+        protected abstract say();
+    }
+    class Cat extends Animal<string> {
+        say(){
+            return 'Mya.';
+        }
+    }
     function sayHi(name: string){
-        console.log(name);
+        console.log(\`Hello, \${name}!\`);
     }
     sayHi(a);
+    const cat = new Cat();
+    cat.say();
 `;
 const filename = 'test.tsx';
 

@@ -19,7 +19,6 @@ const res = parseFileSync(decl, {
 	syntax: 'typescript',
 });
 const inheritanceMap = new Map<string, string[]>([
-	['Identifier', ['Pattern']]
 ]);
 function addInheritance(base, sup){
 	const arr = inheritanceMap.get(sup) ?? [];
@@ -187,5 +186,23 @@ class SchemaBuilder {
 }
 
 const builder = new SchemaBuilder(res);
-const schema = [...builder.getSchemas('Module')];
-await writeFile('./swc/schema.ts', `export const swcSchema = ` + JSON.stringify(schema, null, '  '), 'utf-8');
+const schemas = new Map([...builder.getSchemas('Module')].map(x => [x['@id'], x]));
+for (let [id, schema] of schemas) {
+	const inherit = inheritanceMap.get(id);
+	if (inherit){
+	schema['@inherits'] = [...new Set([
+		...(schema['@inherits'] ?? []),
+		...inherit
+	])]
+		}
+	const text = JSON.stringify(schema, null, '  ')
+		.replaceAll('"Param"', '"Parameter"')
+	await writeFile(`./swc/${id}.ts`, `export const ${id} = ` + text, 'utf-8');
+}
+const ids = Array.from(schemas.keys());
+const index = ids.map(id => `import { ${id} } from "./${id}";` ).join('\n')
++`
+
+export const swcSchema = [\n\t${ids.join(',\n\t')}\n]` ;
+
+await writeFile(`./swc/index.ts`, index, 'utf-8');

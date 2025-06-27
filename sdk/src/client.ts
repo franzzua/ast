@@ -2,7 +2,7 @@ import {WOQLClient, UTILS} from "@terminusdb/terminusdb-client";
 import {INode, DataNode, TypedNode} from "./dataNode";
 import {Module, Node, parse, transform, } from "@swc/core";
 import {Traverser} from "./traverser";
-import {swcSchema} from "../swc/schema";
+import {swcSchema} from "../swc";
 import {randomBytes} from "node:crypto";
 
 const schemaMap = new Map(swcSchema.map(x => [x["@id"], x]));
@@ -64,8 +64,11 @@ export class Client {
 			throw new Error(`Failed to write to database: \n` + errors.join('\n'));
 		}
 	}
-	convert(node: Node){
-		if (!node || !node.type) return node;
+	convert(node: Node, expectedType: string){
+		if (!node) return node;
+		node.type ??= expectedType;
+		if (!node.type)
+			throw new Error(`Node without type:\n ${JSON.stringify(node, null, ' ')}`)
 		const res = {
 			'@type': node.type,
 			'@id': `${node.type}/${randomBytes(8).toString('base64')}`,
@@ -77,12 +80,13 @@ export class Client {
 			const value = node[key]
 			if (!value || typeof value !== "object")
 				res[key] = value;
-			else if (Array.isArray(value))
-				res[key] = value.map(x => this.convert(x));
-			else {
+			else if (Array.isArray(value)) {
+				const expectedType = schema[key]?.['@class'];
+				res[key] = value.map(x => this.convert(x, expectedType));
+			} else {
 				if (!value.type && schema[key])
 					value.type = schema[key];
-				res[key] = this.convert(value);
+				res[key] = this.convert(value, schema[key]);
 			}
 		}
 		for (let schemaKey in schema) {
@@ -92,6 +96,8 @@ export class Client {
 				res[schemaKey] = '';
 			if (schema[schemaKey] == 'xsd:double')
 				res[schemaKey] = 0;
+			if (schema[schemaKey] == 'xsd:boolean')
+				res[schemaKey] = false;
 		}
 		return res;
 	}
