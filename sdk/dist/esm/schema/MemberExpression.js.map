@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../schema/MemberExpression.ts"],"names":["MemberExpression"],"mappings":"AAAA,OAAO,MAAMA,mBAAmB;IAC5B,SAAS;IACT,OAAO;IACP,aAAa;QAAC;KAAa;IAC3B,UAAU;QACN,SAAS;QACT,UAAU;IACd;IACA,YAAY;QACR,SAAS;QACT,UAAU;IACd;IACA,YAAY;IACZ,YAAY;AAChB,EAAE"}

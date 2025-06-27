@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../schema/TemplateElement.ts"],"names":["TemplateElement","TemplateElementValue"],"mappings":"AAAA,OAAO,MAAMA,kBAAkB;IAC3B,SAAS;IACT,OAAO;IACP,QAAQ;IACR,SAAS;AACb,EAAE;AAEF,OAAO,MAAMC,uBAAuB;IAChC,SAAS;IACT,OAAO;IACP,OAAO;IACP,UAAU;QACN,SAAS;QACT,UAAU;IACd;AACJ,EAAE"}

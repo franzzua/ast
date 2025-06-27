@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../schema/VariableDeclaration.ts"],"names":["VariableDeclaration"],"mappings":"AAAA,OAAO,MAAMA,sBAAsB;IAC/B,SAAS;IACT,OAAO;IACP,aAAa;QAAC;KAAY;IAC1B,gBAAgB;QACZ,SAAS;QACT,UAAU;IACd;IACA,QAAQ;QACJ,SAAS;QACT,OAAO;QACP,UAAU;YAAC;YAAO;YAAO;SAAQ;IACrC;IACA,WAAW;AACf,EAAE"}

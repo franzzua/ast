@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../schema/AssignmentExpression.ts"],"names":["AssignmentExpression"],"mappings":"AAAA,OAAO,MAAMA,uBAAuB;IAChC,SAAS;IACT,OAAO;IACP,aAAa;QAAC;KAAa;IAC3B,YAAY;IACZ,QAAQ;QACJ,SAAS;QACT,UAAU;IACd;IACA,SAAS;QACL,SAAS;QACT,UAAU;IACd;AACJ,EAAE"}
