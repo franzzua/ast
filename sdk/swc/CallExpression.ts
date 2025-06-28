@@ -3,7 +3,9 @@ export const CallExpression = {
   "@id": "CallExpression",
   "@inherits": [
     "Expression",
-    "ExpressionBase"
+    "Pattern",
+    "ExpressionBase",
+    "MemberExpressionOrOptionalChainingCall"
   ],
   "callee": {
     "@type": "Class",

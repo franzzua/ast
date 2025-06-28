@@ -1,4 +1,5 @@
 export const JSXAttrValue = {
   "@type": "Class",
-  "@id": "JSXAttrValue"
+  "@id": "JSXAttrValue",
+  "@inherits": []
 }

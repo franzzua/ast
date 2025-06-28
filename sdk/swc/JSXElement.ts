@@ -3,6 +3,7 @@ export const JSXElement = {
   "@id": "JSXElement",
   "@inherits": [
     "Expression",
+    "Pattern",
     "Node",
     "HasSpan",
     "JSXAttrValue",

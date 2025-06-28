@@ -1,4 +1,5 @@
 export const JSXExpression = {
   "@type": "Class",
-  "@id": "JSXExpression"
+  "@id": "JSXExpression",
+  "@inherits": []
 }

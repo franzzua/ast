@@ -1,4 +1,5 @@
 export const TsThisTypeOrIdent = {
   "@type": "Class",
-  "@id": "TsThisTypeOrIdent"
+  "@id": "TsThisTypeOrIdent",
+  "@inherits": []
 }

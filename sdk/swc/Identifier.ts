@@ -2,12 +2,12 @@ export const Identifier = {
   "@type": "Class",
   "@id": "Identifier",
   "@inherits": [
-    "ExpressionBase",
-    "ModuleExportName",
-    "Expression",
+    "PatternBase",
     "PropertyName",
-    "TsEntityName",
-    "TsThisTypeOrIdent",
+    "Expression",
+    "Pattern",
+    "Property",
+    "SpreadElementOrProperty",
     "TsEnumMemberId",
     "TsModuleName",
     "IdentifierOrPrivateNameOrComputedPropName",
@@ -15,8 +15,11 @@ export const Identifier = {
     "JSXObject",
     "JSXElementName",
     "JSXAttributeName",
-    "Property",
-    "SpreadElementOrProperty"
+    "TsEntityName",
+    "TsThisTypeOrIdent",
+    "ModuleExportName",
+    "TsFnParameter",
+    "TsParameterPropertyParameter"
   ],
   "value": "xsd:string",
   "optional": {

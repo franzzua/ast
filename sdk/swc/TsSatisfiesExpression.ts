@@ -3,6 +3,7 @@ export const TsSatisfiesExpression = {
   "@id": "TsSatisfiesExpression",
   "@inherits": [
     "Expression",
+    "Pattern",
     "ExpressionBase"
   ],
   "expression": "Expression",

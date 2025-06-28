@@ -1,4 +1,6 @@
 export const ImportSpecifier = {
   "@type": "Class",
-  "@id": "ImportSpecifier"
+  "@id": "ImportSpecifier",
+  "@inherits": [
+  ]
 }

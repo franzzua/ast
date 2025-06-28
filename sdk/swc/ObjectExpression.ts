@@ -2,8 +2,9 @@ export const ObjectExpression = {
   "@type": "Class",
   "@id": "ObjectExpression",
   "@inherits": [
-    "ExpressionBase",
-    "Expression"
+    "Expression",
+    "Pattern",
+    "ExpressionBase"
   ],
   "properties": {
     "@type": "List",

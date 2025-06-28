@@ -3,6 +3,7 @@ export const ArrayExpression = {
   "@id": "ArrayExpression",
   "@inherits": [
     "Expression",
+    "Pattern",
     "ExpressionBase"
   ],
   "elements": {

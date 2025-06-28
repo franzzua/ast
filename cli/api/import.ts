@@ -5,36 +5,33 @@ import {parseAsync, Client} from "@ast/sdk";
 export default async function _import(_: ParsedArgs, options = parseOptions(_)) {
 	const client = new Client();
 	await client.init();
-	for await (let file of getFiles(options)) {
+	for await (let file of options.files) {
 		const content = await readFile(file, {encoding: 'utf-8'});
-		const parseResult = await parseAsync(file, content);
-		for (let error of parseResult.errors) {
-			console.error(error)
-		}
-		try {
-			if (parseResult.program)
-				await client.add(parseResult.program, file);
-		} catch (e){
-			console.error('Not parsed:', file);
-		}
+		const result = await parseAsync(content);
+		await client.add(result, file);
 	}
 }
 
-function getFiles(options: Options){
+function getFiles(cwd: string){
 	return glob('**/*.ts', {
-		cwd: options.cwd,
+		cwd,
 		exclude: f => f.includes('node_modules') || f.includes('.spec.ts')
 	})
 }
 
 function parseOptions(args: ParsedArgs): Options {
+	const files = args._.slice(1);
+	const cwd = process.cwd();
 	return {
 		watch: Boolean(args.watch || args.w),
-		cwd: process.cwd()
+		cwd,
+		files: files.length == 0 ? getFiles(cwd) : files,
 	}
 }
 
 type Options = {
 	cwd: string;
 	watch: boolean;
+	files: AsyncIterable<string> | Iterable<string>
 }
+

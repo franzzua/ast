@@ -3,6 +3,7 @@ export const AwaitExpression = {
   "@id": "AwaitExpression",
   "@inherits": [
     "Expression",
+    "Pattern",
     "ExpressionBase"
   ],
   "argument": "Expression"

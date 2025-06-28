@@ -3,6 +3,7 @@ export const BinaryExpression = {
   "@id": "BinaryExpression",
   "@inherits": [
     "Expression",
+    "Pattern",
     "ExpressionBase"
   ],
   "operator": "BinaryOperator",

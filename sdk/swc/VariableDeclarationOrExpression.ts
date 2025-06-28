@@ -1,4 +1,5 @@
 export const VariableDeclarationOrExpression = {
   "@type": "Class",
-  "@id": "VariableDeclarationOrExpression"
+  "@id": "VariableDeclarationOrExpression",
+  "@inherits": []
 }

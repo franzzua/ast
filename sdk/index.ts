@@ -1,2 +1,9 @@
 export {Client} from "./src/client";
-export {parseAsync} from "oxc-parser";
+import {parse} from "@swc/core";
+
+export function parseAsync(content: string){
+	return parse(content, {
+		syntax: 'typescript',
+		decorators: true
+	})
+}

@@ -2,9 +2,9 @@ export const ArrayPattern = {
   "@type": "Class",
   "@id": "ArrayPattern",
   "@inherits": [
-    "Pattern",
     "TsFnParameter",
-    "PatternBase"
+    "PatternBase",
+    "Pattern"
   ],
   "elements": {
     "@type": "List",

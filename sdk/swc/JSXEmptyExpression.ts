@@ -3,6 +3,7 @@ export const JSXEmptyExpression = {
   "@id": "JSXEmptyExpression",
   "@inherits": [
     "Expression",
+    "Pattern",
     "Node",
     "HasSpan",
     "JSXExpression"

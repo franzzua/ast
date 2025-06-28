@@ -3,6 +3,7 @@ export const JSXMemberExpression = {
   "@id": "JSXMemberExpression",
   "@inherits": [
     "Expression",
+    "Pattern",
     "Node",
     "JSXObject",
     "JSXElementName"

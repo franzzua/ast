@@ -3,6 +3,7 @@ export const PrivateName = {
   "@id": "PrivateName",
   "@inherits": [
     "Expression",
+    "Pattern",
     "ExpressionBase",
     "IdentifierOrPrivateNameOrComputedPropName"
   ],

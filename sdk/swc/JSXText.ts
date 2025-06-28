@@ -4,6 +4,7 @@ export const JSXText = {
   "@inherits": [
     "Literal",
     "Expression",
+    "Pattern",
     "Node",
     "HasSpan",
     "JSXElementChild"

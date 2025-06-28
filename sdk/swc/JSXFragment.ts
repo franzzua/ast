@@ -3,6 +3,7 @@ export const JSXFragment = {
   "@id": "JSXFragment",
   "@inherits": [
     "Expression",
+    "Pattern",
     "JSXAttrValue",
     "Node",
     "HasSpan",

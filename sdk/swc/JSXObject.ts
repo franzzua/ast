@@ -1,4 +1,5 @@
 export const JSXObject = {
   "@type": "Class",
-  "@id": "JSXObject"
+  "@id": "JSXObject",
+  "@inherits": []
 }

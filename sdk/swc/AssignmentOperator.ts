@@ -18,5 +18,6 @@ export const AssignmentOperator = {
     "&&=",
     "||=",
     "??="
-  ]
+  ],
+  "@inherits": []
 }

@@ -1,4 +1,5 @@
 export const BlockStatementOrExpression = {
   "@type": "Class",
-  "@id": "BlockStatementOrExpression"
+  "@id": "BlockStatementOrExpression",
+  "@inherits": []
 }

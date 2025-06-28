@@ -4,6 +4,7 @@ export const NullLiteral = {
   "@inherits": [
     "Literal",
     "Expression",
+    "Pattern",
     "Node",
     "HasSpan"
   ]

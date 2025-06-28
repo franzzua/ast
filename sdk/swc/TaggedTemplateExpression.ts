@@ -3,6 +3,7 @@ export const TaggedTemplateExpression = {
   "@id": "TaggedTemplateExpression",
   "@inherits": [
     "Expression",
+    "Pattern",
     "ExpressionBase"
   ],
   "tag": "Expression",

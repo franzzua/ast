@@ -2,10 +2,10 @@ export const TsIndexSignature = {
   "@type": "Class",
   "@id": "TsIndexSignature",
   "@inherits": [
-    "TsTypeElement",
+    "ClassMember",
     "Node",
     "HasSpan",
-    "ClassMember"
+    "TsTypeElement"
   ],
   "params": {
     "@type": "List",

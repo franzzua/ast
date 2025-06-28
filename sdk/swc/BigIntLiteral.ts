@@ -3,11 +3,12 @@ export const BigIntLiteral = {
   "@id": "BigIntLiteral",
   "@inherits": [
     "PropertyName",
+    "Literal",
+    "Expression",
+    "Pattern",
     "Node",
     "HasSpan",
-    "TsLiteral",
-    "Literal",
-    "Expression"
+    "TsLiteral"
   ],
   "value": "xsd:double",
   "raw": {

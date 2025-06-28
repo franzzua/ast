@@ -3,6 +3,7 @@ export const SequenceExpression = {
   "@id": "SequenceExpression",
   "@inherits": [
     "Expression",
+    "Pattern",
     "ExpressionBase"
   ],
   "expressions": {

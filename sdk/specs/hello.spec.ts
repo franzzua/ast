@@ -2,6 +2,7 @@ import {describe, test} from "node:test"
 import {Client} from "../src/client";
 import {} from "oxc-walker";
 import {parse, transform} from "@swc/core";
+import {parseAsync} from "../index";
 
 const code = `
     const a = 'Alice';
@@ -26,10 +27,7 @@ describe('hello', async () => {
     const client = new Client();
 
     await test('parse', async () => {
-        const program = await parse(code, {
-            syntax: 'typescript',
-
-        });
+        const program = await parseAsync(code);
         await client.init();
         await client.add(program, filename);
     });

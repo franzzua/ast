@@ -1,4 +1,5 @@
 export const MemberExpressionOrOptionalChainingCall = {
   "@type": "Class",
-  "@id": "MemberExpressionOrOptionalChainingCall"
+  "@id": "MemberExpressionOrOptionalChainingCall",
+  "@inherits": []
 }

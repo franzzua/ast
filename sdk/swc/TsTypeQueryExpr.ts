@@ -1,4 +1,5 @@
 export const TsTypeQueryExpr = {
   "@type": "Class",
-  "@id": "TsTypeQueryExpr"
+  "@id": "TsTypeQueryExpr",
+  "@inherits": []
 }

@@ -1,4 +1,5 @@
 export const TsTypeElement = {
   "@type": "Class",
-  "@id": "TsTypeElement"
+  "@id": "TsTypeElement",
+  "@inherits": []
 }

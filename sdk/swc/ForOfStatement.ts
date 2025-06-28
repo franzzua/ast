@@ -9,7 +9,7 @@ export const ForOfStatement = {
   ],
   "await": {
     "@type": "Optional",
-    "@class": "Span"
+    "@class": "xsd:boolean"
   },
   "left": {
     "@type": "Class",

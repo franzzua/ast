@@ -3,11 +3,14 @@ export const TemplateLiteral = {
   "@id": "TemplateLiteral",
   "@inherits": [
     "Expression",
-    "ExpressionBase"
+    "Pattern",
+    "Node",
+    "HasSpan",
+    "TsLiteral"
   ],
-  "expressions": {
+  "types": {
     "@type": "List",
-    "@class": "Expression"
+    "@class": "TsType"
   },
   "quasis": {
     "@type": "List",

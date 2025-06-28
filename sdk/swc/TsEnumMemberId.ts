@@ -1,4 +1,5 @@
 export const TsEnumMemberId = {
   "@type": "Class",
-  "@id": "TsEnumMemberId"
+  "@id": "TsEnumMemberId",
+  "@inherits": []
 }

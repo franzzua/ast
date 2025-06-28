@@ -5,5 +5,6 @@ export const MethodKind = {
     "method",
     "getter",
     "setter"
-  ]
+  ],
+  "@inherits": []
 }

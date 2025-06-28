@@ -3,6 +3,7 @@ export const TsConstAssertion = {
   "@id": "TsConstAssertion",
   "@inherits": [
     "Expression",
+    "Pattern",
     "ExpressionBase"
   ],
   "expression": "Expression"

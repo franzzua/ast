@@ -2,15 +2,17 @@ import {
 	BooleanLiteral, Identifier,
 	Module,
 	parseFileSync, StringLiteral, TsArrayType,
-	TsInterfaceDeclaration, TsKeywordType, TsLiteralType, TsParenthesizedType,
+	TsInterfaceDeclaration, TsKeywordType, TsKeywordTypeKind, TsLiteralType, TsParenthesizedType,
 	TsTypeAliasDeclaration,
 	TsTypeReference, TsUnionType
 } from "@swc/core";
 import {resolve} from "node:path";
 import {fileURLToPath} from "node:url";
-import {Node} from "@swc/types";
+import {Node, OptionalChainingExpression} from "@swc/types";
 import {writeFile} from "node:fs/promises";
 import {TSPropertySignature} from "oxc-parser";
+import {TsMethodSignature} from "./swc/TsMethodSignature";
+import {ForOfStatement} from "./swc/ForOfStatement";
 
 const file = fileURLToPath(import.meta.resolve("@swc/types"));
 
@@ -47,10 +49,11 @@ const SchemaFactories = {
 	TsLiteralType: (typeRef: TsLiteralType) => getSchema(typeRef.literal),
 	TsArrayType: (decl: TsArrayType) => {
 		const name = getSchema(decl.elemType);
+		const className = typeof name.schema == "string" ? name.schema : name.schema['@id']
 		return {
 			schema: {
 				'@type': 'List',
-				'@class': typeof name.schema == "string" ? name.schema : name.schema['@id']
+				'@class': className
 			},
 			deps: name.deps
 		};
@@ -155,17 +158,20 @@ function getSchema(node: Node) {
 }
 
 const SchemaFixes = {
-	HasSpan: addProperty('ctxt', 'number'),
+	HasSpan: addProperty('ctxt', 'number', true),
+	ForOfStatement: addProperty('await', 'boolean', true),
 	Identifier: setOptional('optional'),
 	Span: setOptional('ctxt'),
 	HasInterpreter: setOptional('interpreter'),
+	OptionalChainingExpression: setOptional('questionDotToken'),
+	TsMethodSignature: setOptional('readonly')
 }
-function addProperty(key: string, type: string){
+function addProperty(key: string, type: TsKeywordTypeKind, optional: boolean){
 	return (node: TsInterfaceDeclaration) => {
 		node.body.body.push({
 			type: 'TsPropertySignature',
 			key: {value: key, type: 'Identifier'} as Identifier,
-			optional: true,
+			optional: optional,
 			readonly: false,
 			computed: false,
 			span: null,
@@ -194,55 +200,99 @@ function setOptional(key: string){
 }
 
 class SchemaBuilder {
-	private types = new Map<string, TsInterfaceDeclaration | TsTypeAliasDeclaration>();
+	private types = new Map<string, TsTypeAliasDeclaration>();
+	private interfaces = new Map<string, TsInterfaceDeclaration>();
 	private processed = new Set<string>();
+	private renamings = new Map<string, string>();
 
 	constructor(private root: Module) {
 		const declarations = root.body.filter(x => x.type == "ExportDeclaration" || x.type == "TsInterfaceDeclaration" || x.type == "TsTypeAliasDeclaration");
 		for (let declaration of declarations) {
 			if ('declaration' in declaration) declaration = declaration.declaration as TsInterfaceDeclaration | TsTypeAliasDeclaration;
-			this.types.set(declaration.id.value, declaration);
+			if (declaration.type == 'TsInterfaceDeclaration'){
+				const typeProp = declaration.body.body.find(
+					x => x.type == 'TsPropertySignature' &&
+						x.key.type == 'Identifier' &&
+						x.key.value == 'type'
+				) as any as TSPropertySignature;
+				const name = ((typeProp?.typeAnnotation?.typeAnnotation as any as TsLiteralType)?.literal as StringLiteral)?.value;
+				if (name && name != declaration.id.value) {
+					this.renamings.set(declaration.id.value, name);
+					declaration.id.value = name;
+				}
+				this.interfaces.set(declaration.id.value, declaration);
+			} else {
+				this.types.set(declaration.id.value, declaration);
+			}
 		}
 		this.fixNodes();
 	}
 
 	fixNodes() {
 		for (let type in SchemaFixes) {
-			SchemaFixes[type](this.types.get(type));
+			SchemaFixes[type](this.types.get(type) ?? this.interfaces.get(type));
 		}
 	}
 
 	* getSchemas(name: string) {
+		name = this.renamings.get(name) ?? name;
 		if (name.startsWith('xsd:') || this.processed.has(name))
 			return;
 		this.processed.add(name);
-		const node = this.types.get(name);
-		if (!node) throw new Error(`Node ${name} not found`);
-		yield* this.getNodeSchemas(node);
+		const type = this.types.get(name);
+		const iface = this.interfaces.get(name);
+		if (!type && !iface) throw new Error(`Node ${name} not found`);
+		yield* this.getNodeSchemas(type, iface);
 	}
 
-	* getNodeSchemas(node: Node) {
-		const result = getSchema(node);
-		yield result.schema;
-		for (let dep of result.deps) {
+	* getNodeSchemas(type: TsTypeAliasDeclaration, iface: TsInterfaceDeclaration) {
+		const typeSchema = type ? getSchema(type): null;
+		const ifaceSchema = iface ? getSchema(iface) : null;
+		if (typeSchema && ifaceSchema){
+			const schema = {
+				...typeSchema.schema,
+				...ifaceSchema.schema,
+				['@inherits']: [
+					...(typeSchema.schema['@inherits'] ?? []),
+					...(ifaceSchema.schema['@inherits'] ?? []),
+				]
+			};
+			yield schema;
+		} else {
+			yield (typeSchema?.schema ?? ifaceSchema?.schema);
+		}
+		for (let dep of [...new Set([
+			...(typeSchema?.deps ?? []),
+			...(ifaceSchema?.deps ?? []),
+		])]) {
 			if (typeof dep === "object")
 				yield dep;
 			else
 				yield* this.getSchemas(dep);
 		}
 	}
+
+	getModuleSchemas(){
+		const schemas = new Map([...this.getSchemas('Module')].map(x => [x['@id'], x]));
+		for (let [id, schema] of schemas) {
+			const inherit = inheritanceMap.get(id) ?? [];
+			const rename = [...this.renamings.entries()].find(x => x[1] == id)?.[0];
+			const renameInherits = inheritanceMap.get(rename) ?? [];
+			const allInherits = new Set([
+				...(schema['@inherits'] ?? []),
+				...inherit,
+				...renameInherits
+			]);
+			allInherits.delete(id);
+			schema['@inherits'] = [...allInherits];
+		}
+		return schemas;
+	}
 }
 
 const builder = new SchemaBuilder(res);
-const schemas = new Map([...builder.getSchemas('Module')].map(x => [x['@id'], x]));
+const schemas = builder.getModuleSchemas();
 for (let [id, schema] of schemas) {
-	const inherit = inheritanceMap.get(id);
-	if (inherit) {
-		schema['@inherits'] = [...new Set([
-			...(schema['@inherits'] ?? []),
-			...inherit
-		])]
-	}
 	const text = JSON.stringify(schema, null, '  ')
 		.replaceAll('"Param"', '"Parameter"')
 	await writeFile(`./swc/${id}.ts`, `export const ${id} = ` + text, 'utf-8');

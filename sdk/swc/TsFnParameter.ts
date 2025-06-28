@@ -1,4 +1,5 @@
 export const TsFnParameter = {
   "@type": "Class",
-  "@id": "TsFnParameter"
+  "@id": "TsFnParameter",
+  "@inherits": []
 }

@@ -1,4 +1,5 @@
 export const JSXElementChild = {
   "@type": "Class",
-  "@id": "JSXElementChild"
+  "@id": "JSXElementChild",
+  "@inherits": []
 }

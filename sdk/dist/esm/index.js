@@ -1,4 +1,10 @@
 export { Client } from "./src/client.js";
-export { parseAsync } from "oxc-parser";
+import { parse } from "@swc/core";
+export function parseAsync(content) {
+    return parse(content, {
+        syntax: 'typescript',
+        decorators: true
+    });
+}
 
 //# sourceMappingURL=index.js.map

@@ -2,8 +2,8 @@ export const ObjectPattern = {
   "@type": "Class",
   "@id": "ObjectPattern",
   "@inherits": [
-    "Pattern",
     "TsFnParameter",
+    "Pattern",
     "PatternBase"
   ],
   "properties": {

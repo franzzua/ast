@@ -9,5 +9,6 @@ export const UnaryOperator = {
     "typeof",
     "void",
     "delete"
-  ]
+  ],
+  "@inherits": []
 }

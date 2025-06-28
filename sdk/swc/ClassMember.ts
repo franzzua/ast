@@ -1,4 +1,5 @@
 export const ClassMember = {
   "@type": "Class",
-  "@id": "ClassMember"
+  "@id": "ClassMember",
+  "@inherits": []
 }

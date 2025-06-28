@@ -3,6 +3,7 @@ export const SuperPropExpression = {
   "@id": "SuperPropExpression",
   "@inherits": [
     "Expression",
+    "Pattern",
     "ExpressionBase"
   ],
   "obj": "Super",

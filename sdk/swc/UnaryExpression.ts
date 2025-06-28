@@ -3,6 +3,7 @@ export const UnaryExpression = {
   "@id": "UnaryExpression",
   "@inherits": [
     "Expression",
+    "Pattern",
     "ExpressionBase"
   ],
   "operator": "UnaryOperator",

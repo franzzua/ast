@@ -1,4 +1,5 @@
 export const TsParameterPropertyParameter = {
   "@type": "Class",
-  "@id": "TsParameterPropertyParameter"
+  "@id": "TsParameterPropertyParameter",
+  "@inherits": []
 }

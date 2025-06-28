@@ -2,8 +2,8 @@ export const Invalid = {
   "@type": "Class",
   "@id": "Invalid",
   "@inherits": [
-    "Expression",
     "Pattern",
+    "Expression",
     "Node",
     "HasSpan"
   ]

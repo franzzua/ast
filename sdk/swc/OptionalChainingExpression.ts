@@ -3,9 +3,13 @@ export const OptionalChainingExpression = {
   "@id": "OptionalChainingExpression",
   "@inherits": [
     "Expression",
+    "Pattern",
     "ExpressionBase"
   ],
-  "questionDotToken": "Span",
+  "questionDotToken": {
+    "@type": "Optional",
+    "@class": "Span"
+  },
   "base": {
     "@type": "Class",
     "@id": "MemberExpressionOrOptionalChainingCall"

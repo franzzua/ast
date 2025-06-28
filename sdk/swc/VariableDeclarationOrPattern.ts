@@ -1,4 +1,5 @@
 export const VariableDeclarationOrPattern = {
   "@type": "Class",
-  "@id": "VariableDeclarationOrPattern"
+  "@id": "VariableDeclarationOrPattern",
+  "@inherits": []
 }

@@ -1,1 +1,1 @@
-{"version":3,"sources":["../../index.ts"],"names":["Client","parseAsync"],"mappings":"AAAA,SAAQA,MAAM,QAAO,kBAAe;AACpC,SAAQC,UAAU,QAAO,aAAa"}
+{"version":3,"sources":["../../index.ts"],"names":["Client","parse","parseAsync","content","syntax","decorators"],"mappings":"AAAA,SAAQA,MAAM,QAAO,kBAAe;AACpC,SAAQC,KAAK,QAAO,YAAY;AAEhC,OAAO,SAASC,WAAWC,OAAe;IACzC,OAAOF,MAAME,SAAS;QACrBC,QAAQ;QACRC,YAAY;IACb;AACD"}

@@ -3,6 +3,7 @@ export const ParenthesisExpression = {
   "@id": "ParenthesisExpression",
   "@inherits": [
     "Expression",
+    "Pattern",
     "ExpressionBase"
   ],
   "expression": "Expression"

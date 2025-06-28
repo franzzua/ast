@@ -1,4 +1,5 @@
 export const TsLiteral = {
   "@type": "Class",
-  "@id": "TsLiteral"
+  "@id": "TsLiteral",
+  "@inherits": []
 }

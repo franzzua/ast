@@ -1,4 +1,5 @@
 export const SuperOrImportOrExpression = {
   "@type": "Class",
-  "@id": "SuperOrImportOrExpression"
+  "@id": "SuperOrImportOrExpression",
+  "@inherits": []
 }

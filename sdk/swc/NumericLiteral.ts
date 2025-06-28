@@ -5,9 +5,10 @@ export const NumericLiteral = {
     "PropertyName",
     "Node",
     "HasSpan",
-    "TsLiteral",
     "Literal",
-    "Expression"
+    "Expression",
+    "Pattern",
+    "TsLiteral"
   ],
   "value": "xsd:double",
   "raw": {

@@ -1,4 +1,5 @@
 export const DefaultDecl = {
   "@type": "Class",
-  "@id": "DefaultDecl"
+  "@id": "DefaultDecl",
+  "@inherits": []
 }

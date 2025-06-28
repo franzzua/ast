@@ -3,6 +3,7 @@ export const UpdateExpression = {
   "@id": "UpdateExpression",
   "@inherits": [
     "Expression",
+    "Pattern",
     "ExpressionBase"
   ],
   "operator": "UpdateOperator",

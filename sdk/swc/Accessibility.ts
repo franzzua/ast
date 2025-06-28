@@ -5,5 +5,6 @@ export const Accessibility = {
     "public",
     "protected",
     "private"
-  ]
+  ],
+  "@inherits": []
 }

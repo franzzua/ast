@@ -3,6 +3,7 @@ export const ArrowFunctionExpression = {
   "@id": "ArrowFunctionExpression",
   "@inherits": [
     "Expression",
+    "Pattern",
     "ExpressionBase"
   ],
   "params": {

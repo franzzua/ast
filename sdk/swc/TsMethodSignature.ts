@@ -6,7 +6,10 @@ export const TsMethodSignature = {
     "Node",
     "HasSpan"
   ],
-  "readonly": "xsd:boolean",
+  "readonly": {
+    "@type": "Optional",
+    "@class": "xsd:boolean"
+  },
   "key": "Expression",
   "computed": "xsd:boolean",
   "optional": "xsd:boolean",

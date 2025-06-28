@@ -1,4 +1,5 @@
 export const JSXAttributeOrSpread = {
   "@type": "Class",
-  "@id": "JSXAttributeOrSpread"
+  "@id": "JSXAttributeOrSpread",
+  "@inherits": []
 }

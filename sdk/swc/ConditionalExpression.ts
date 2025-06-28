@@ -3,6 +3,7 @@ export const ConditionalExpression = {
   "@id": "ConditionalExpression",
   "@inherits": [
     "Expression",
+    "Pattern",
     "ExpressionBase"
   ],
   "test": "Expression",

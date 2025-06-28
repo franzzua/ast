@@ -3,6 +3,7 @@ export const MemberExpression = {
   "@id": "MemberExpression",
   "@inherits": [
     "Expression",
+    "Pattern",
     "ExpressionBase",
     "MemberExpressionOrOptionalChainingCall"
   ],

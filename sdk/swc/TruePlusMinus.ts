@@ -5,5 +5,6 @@ export const TruePlusMinus = {
     true,
     "+",
     "-"
-  ]
+  ],
+  "@inherits": []
 }

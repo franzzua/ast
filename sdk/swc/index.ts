@@ -7,26 +7,8 @@ import { ModuleItem } from "./ModuleItem";
 import { ModuleDeclaration } from "./ModuleDeclaration";
 import { ImportDeclaration } from "./ImportDeclaration";
 import { ImportSpecifier } from "./ImportSpecifier";
-import { NamedImportSpecifier } from "./NamedImportSpecifier";
-import { Identifier } from "./Identifier";
-import { ExpressionBase } from "./ExpressionBase";
-import { ModuleExportName } from "./ModuleExportName";
-import { StringLiteral } from "./StringLiteral";
 import { ImportDefaultSpecifier } from "./ImportDefaultSpecifier";
-import { ImportNamespaceSpecifier } from "./ImportNamespaceSpecifier";
-import { ObjectExpression } from "./ObjectExpression";
-import { SpreadElement } from "./SpreadElement";
-import { Expression } from "./Expression";
-import { ThisExpression } from "./ThisExpression";
-import { ArrayExpression } from "./ArrayExpression";
-import { ExprOrSpread } from "./ExprOrSpread";
-import { FunctionExpression } from "./FunctionExpression";
-import { Fn } from "./Fn";
-import { HasDecorator } from "./HasDecorator";
-import { Decorator } from "./Decorator";
-import { Param } from "./Param";
-import { Pattern } from "./Pattern";
-import { BindingIdentifier } from "./BindingIdentifier";
+import { Identifier } from "./Identifier";
 import { PatternBase } from "./PatternBase";
 import { TsTypeAnnotation } from "./TsTypeAnnotation";
 import { TsType } from "./TsType";
@@ -37,59 +19,27 @@ import { TsFnOrConstructorType } from "./TsFnOrConstructorType";
 import { TsFunctionType } from "./TsFunctionType";
 import { TsFnParameter } from "./TsFnParameter";
 import { ArrayPattern } from "./ArrayPattern";
+import { Pattern } from "./Pattern";
 import { RestElement } from "./RestElement";
 import { ObjectPattern } from "./ObjectPattern";
 import { ObjectPatternProperty } from "./ObjectPatternProperty";
 import { KeyValuePatternProperty } from "./KeyValuePatternProperty";
 import { PropertyName } from "./PropertyName";
+import { StringLiteral } from "./StringLiteral";
 import { NumericLiteral } from "./NumericLiteral";
-import { ComputedPropName } from "./ComputedPropName";
-import { BigIntLiteral } from "./BigIntLiteral";
-import { AssignmentPatternProperty } from "./AssignmentPatternProperty";
-import { TsTypeParameterDeclaration } from "./TsTypeParameterDeclaration";
-import { TsTypeParameter } from "./TsTypeParameter";
-import { TsConstructorType } from "./TsConstructorType";
-import { TsTypeReference } from "./TsTypeReference";
-import { TsEntityName } from "./TsEntityName";
-import { TsQualifiedName } from "./TsQualifiedName";
-import { TsTypeParameterInstantiation } from "./TsTypeParameterInstantiation";
-import { TsTypeQuery } from "./TsTypeQuery";
-import { TsTypeQueryExpr } from "./TsTypeQueryExpr";
-import { TsImportType } from "./TsImportType";
-import { TsTypeLiteral } from "./TsTypeLiteral";
-import { TsTypeElement } from "./TsTypeElement";
-import { TsCallSignatureDeclaration } from "./TsCallSignatureDeclaration";
-import { TsConstructSignatureDeclaration } from "./TsConstructSignatureDeclaration";
-import { TsPropertySignature } from "./TsPropertySignature";
-import { TsGetterSignature } from "./TsGetterSignature";
-import { TsSetterSignature } from "./TsSetterSignature";
-import { TsMethodSignature } from "./TsMethodSignature";
-import { TsIndexSignature } from "./TsIndexSignature";
-import { TsArrayType } from "./TsArrayType";
-import { TsTupleType } from "./TsTupleType";
-import { TsTupleElement } from "./TsTupleElement";
-import { TsOptionalType } from "./TsOptionalType";
-import { TsRestType } from "./TsRestType";
-import { TsUnionOrIntersectionType } from "./TsUnionOrIntersectionType";
-import { TsUnionType } from "./TsUnionType";
-import { TsIntersectionType } from "./TsIntersectionType";
-import { TsConditionalType } from "./TsConditionalType";
-import { TsInferType } from "./TsInferType";
-import { TsParenthesizedType } from "./TsParenthesizedType";
-import { TsTypeOperator } from "./TsTypeOperator";
-import { TsTypeOperatorOp } from "./TsTypeOperatorOp";
-import { TsIndexedAccessType } from "./TsIndexedAccessType";
-import { TsMappedType } from "./TsMappedType";
-import { TruePlusMinus } from "./TruePlusMinus";
-import { TsLiteralType } from "./TsLiteralType";
-import { TsLiteral } from "./TsLiteral";
-import { BooleanLiteral } from "./BooleanLiteral";
-import { TsTemplateLiteralType } from "./TsTemplateLiteralType";
-import { TemplateElement } from "./TemplateElement";
-import { TsTypePredicate } from "./TsTypePredicate";
-import { TsThisTypeOrIdent } from "./TsThisTypeOrIdent";
-import { AssignmentPattern } from "./AssignmentPattern";
-import { Invalid } from "./Invalid";
+import { Computed } from "./Computed";
+import { Expression } from "./Expression";
+import { ThisExpression } from "./ThisExpression";
+import { ExpressionBase } from "./ExpressionBase";
+import { ArrayExpression } from "./ArrayExpression";
+import { ExprOrSpread } from "./ExprOrSpread";
+import { ObjectExpression } from "./ObjectExpression";
+import { SpreadElement } from "./SpreadElement";
+import { Property } from "./Property";
+import { KeyValueProperty } from "./KeyValueProperty";
+import { PropBase } from "./PropBase";
+import { AssignmentProperty } from "./AssignmentProperty";
+import { GetterProperty } from "./GetterProperty";
 import { BlockStatement } from "./BlockStatement";
 import { Statement } from "./Statement";
 import { EmptyStatement } from "./EmptyStatement";
@@ -118,25 +68,41 @@ import { ForOfStatement } from "./ForOfStatement";
 import { Declaration } from "./Declaration";
 import { ClassDeclaration } from "./ClassDeclaration";
 import { Class } from "./Class";
+import { HasDecorator } from "./HasDecorator";
+import { Decorator } from "./Decorator";
 import { ClassMember } from "./ClassMember";
 import { Constructor } from "./Constructor";
 import { TsParameterProperty } from "./TsParameterProperty";
 import { Accessibility } from "./Accessibility";
 import { TsParameterPropertyParameter } from "./TsParameterPropertyParameter";
+import { AssignmentPattern } from "./AssignmentPattern";
+import { Parameter } from "./Parameter";
 import { TsParameterPropertyOrParam } from "./TsParameterPropertyOrParam";
 import { ClassMethod } from "./ClassMethod";
 import { ClassMethodBase } from "./ClassMethodBase";
+import { Fn } from "./Fn";
+import { TsTypeParameterDeclaration } from "./TsTypeParameterDeclaration";
+import { TsTypeParameter } from "./TsTypeParameter";
 import { MethodKind } from "./MethodKind";
 import { PrivateMethod } from "./PrivateMethod";
 import { PrivateName } from "./PrivateName";
 import { ClassProperty } from "./ClassProperty";
 import { ClassPropertyBase } from "./ClassPropertyBase";
 import { PrivateProperty } from "./PrivateProperty";
+import { TsIndexSignature } from "./TsIndexSignature";
 import { StaticBlock } from "./StaticBlock";
+import { TsTypeParameterInstantiation } from "./TsTypeParameterInstantiation";
 import { TsExpressionWithTypeArguments } from "./TsExpressionWithTypeArguments";
 import { FunctionDeclaration } from "./FunctionDeclaration";
 import { TsInterfaceDeclaration } from "./TsInterfaceDeclaration";
 import { TsInterfaceBody } from "./TsInterfaceBody";
+import { TsTypeElement } from "./TsTypeElement";
+import { TsCallSignatureDeclaration } from "./TsCallSignatureDeclaration";
+import { TsConstructSignatureDeclaration } from "./TsConstructSignatureDeclaration";
+import { TsPropertySignature } from "./TsPropertySignature";
+import { TsGetterSignature } from "./TsGetterSignature";
+import { TsSetterSignature } from "./TsSetterSignature";
+import { TsMethodSignature } from "./TsMethodSignature";
 import { TsTypeAliasDeclaration } from "./TsTypeAliasDeclaration";
 import { TsEnumDeclaration } from "./TsEnumDeclaration";
 import { TsEnumMember } from "./TsEnumMember";
@@ -147,6 +113,10 @@ import { TsNamespaceBody } from "./TsNamespaceBody";
 import { TsModuleBlock } from "./TsModuleBlock";
 import { TsNamespaceDeclaration } from "./TsNamespaceDeclaration";
 import { ExpressionStatement } from "./ExpressionStatement";
+import { SetterProperty } from "./SetterProperty";
+import { MethodProperty } from "./MethodProperty";
+import { SpreadElementOrProperty } from "./SpreadElementOrProperty";
+import { FunctionExpression } from "./FunctionExpression";
 import { UnaryExpression } from "./UnaryExpression";
 import { UnaryOperator } from "./UnaryOperator";
 import { UpdateExpression } from "./UpdateExpression";
@@ -169,10 +139,13 @@ import { Argument } from "./Argument";
 import { NewExpression } from "./NewExpression";
 import { SequenceExpression } from "./SequenceExpression";
 import { Literal } from "./Literal";
+import { BooleanLiteral } from "./BooleanLiteral";
 import { NullLiteral } from "./NullLiteral";
+import { BigIntLiteral } from "./BigIntLiteral";
 import { RegExpLiteral } from "./RegExpLiteral";
 import { JSXText } from "./JSXText";
 import { TemplateLiteral } from "./TemplateLiteral";
+import { TemplateElement } from "./TemplateElement";
 import { TaggedTemplateExpression } from "./TaggedTemplateExpression";
 import { ArrowFunctionExpression } from "./ArrowFunctionExpression";
 import { BlockStatementOrExpression } from "./BlockStatementOrExpression";
@@ -207,22 +180,44 @@ import { TsAsExpression } from "./TsAsExpression";
 import { TsSatisfiesExpression } from "./TsSatisfiesExpression";
 import { TsInstantiation } from "./TsInstantiation";
 import { OptionalChainingExpression } from "./OptionalChainingExpression";
-import { OptionalChainingCall } from "./OptionalChainingCall";
 import { MemberExpressionOrOptionalChainingCall } from "./MemberExpressionOrOptionalChainingCall";
-import { Property } from "./Property";
-import { KeyValueProperty } from "./KeyValueProperty";
-import { PropBase } from "./PropBase";
-import { AssignmentProperty } from "./AssignmentProperty";
-import { GetterProperty } from "./GetterProperty";
-import { SetterProperty } from "./SetterProperty";
-import { MethodProperty } from "./MethodProperty";
-import { SpreadElementOrProperty } from "./SpreadElementOrProperty";
+import { Invalid } from "./Invalid";
+import { AssignmentPatternProperty } from "./AssignmentPatternProperty";
+import { TsConstructorType } from "./TsConstructorType";
+import { TsTypeReference } from "./TsTypeReference";
+import { TsEntityName } from "./TsEntityName";
+import { TsQualifiedName } from "./TsQualifiedName";
+import { TsTypeQuery } from "./TsTypeQuery";
+import { TsTypeQueryExpr } from "./TsTypeQueryExpr";
+import { TsImportType } from "./TsImportType";
+import { TsTypeLiteral } from "./TsTypeLiteral";
+import { TsArrayType } from "./TsArrayType";
+import { TsTupleType } from "./TsTupleType";
+import { TsTupleElement } from "./TsTupleElement";
+import { TsOptionalType } from "./TsOptionalType";
+import { TsRestType } from "./TsRestType";
+import { TsUnionOrIntersectionType } from "./TsUnionOrIntersectionType";
+import { TsUnionType } from "./TsUnionType";
+import { TsIntersectionType } from "./TsIntersectionType";
+import { TsConditionalType } from "./TsConditionalType";
+import { TsInferType } from "./TsInferType";
+import { TsParenthesizedType } from "./TsParenthesizedType";
+import { TsTypeOperator } from "./TsTypeOperator";
+import { TsTypeOperatorOp } from "./TsTypeOperatorOp";
+import { TsIndexedAccessType } from "./TsIndexedAccessType";
+import { TsMappedType } from "./TsMappedType";
+import { TruePlusMinus } from "./TruePlusMinus";
+import { TsLiteralType } from "./TsLiteralType";
+import { TsLiteral } from "./TsLiteral";
+import { TsTypePredicate } from "./TsTypePredicate";
+import { TsThisTypeOrIdent } from "./TsThisTypeOrIdent";
+import { ImportNamespaceSpecifier } from "./ImportNamespaceSpecifier";
+import { ModuleExportName } from "./ModuleExportName";
 import { ExportDeclaration } from "./ExportDeclaration";
 import { ExportNamedDeclaration } from "./ExportNamedDeclaration";
 import { ExportSpecifier } from "./ExportSpecifier";
 import { ExportNamespaceSpecifier } from "./ExportNamespaceSpecifier";
 import { ExportDefaultSpecifier } from "./ExportDefaultSpecifier";
-import { NamedExportSpecifier } from "./NamedExportSpecifier";
 import { ExportDefaultDeclaration } from "./ExportDefaultDeclaration";
 import { DefaultDecl } from "./DefaultDecl";
 import { ExportDefaultExpression } from "./ExportDefaultExpression";
@@ -243,26 +238,8 @@ export const swcSchema = [
 	ModuleDeclaration,
 	ImportDeclaration,
 	ImportSpecifier,
-	NamedImportSpecifier,
-	Identifier,
-	ExpressionBase,
-	ModuleExportName,
-	StringLiteral,
 	ImportDefaultSpecifier,
-	ImportNamespaceSpecifier,
-	ObjectExpression,
-	SpreadElement,
-	Expression,
-	ThisExpression,
-	ArrayExpression,
-	ExprOrSpread,
-	FunctionExpression,
-	Fn,
-	HasDecorator,
-	Decorator,
-	Param,
-	Pattern,
-	BindingIdentifier,
+	Identifier,
 	PatternBase,
 	TsTypeAnnotation,
 	TsType,
@@ -273,59 +250,27 @@ export const swcSchema = [
 	TsFunctionType,
 	TsFnParameter,
 	ArrayPattern,
+	Pattern,
 	RestElement,
 	ObjectPattern,
 	ObjectPatternProperty,
 	KeyValuePatternProperty,
 	PropertyName,
+	StringLiteral,
 	NumericLiteral,
-	ComputedPropName,
-	BigIntLiteral,
-	AssignmentPatternProperty,
-	TsTypeParameterDeclaration,
-	TsTypeParameter,
-	TsConstructorType,
-	TsTypeReference,
-	TsEntityName,
-	TsQualifiedName,
-	TsTypeParameterInstantiation,
-	TsTypeQuery,
-	TsTypeQueryExpr,
-	TsImportType,
-	TsTypeLiteral,
-	TsTypeElement,
-	TsCallSignatureDeclaration,
-	TsConstructSignatureDeclaration,
-	TsPropertySignature,
-	TsGetterSignature,
-	TsSetterSignature,
-	TsMethodSignature,
-	TsIndexSignature,
-	TsArrayType,
-	TsTupleType,
-	TsTupleElement,
-	TsOptionalType,
-	TsRestType,
-	TsUnionOrIntersectionType,
-	TsUnionType,
-	TsIntersectionType,
-	TsConditionalType,
-	TsInferType,
-	TsParenthesizedType,
-	TsTypeOperator,
-	TsTypeOperatorOp,
-	TsIndexedAccessType,
-	TsMappedType,
-	TruePlusMinus,
-	TsLiteralType,
-	TsLiteral,
-	BooleanLiteral,
-	TsTemplateLiteralType,
-	TemplateElement,
-	TsTypePredicate,
-	TsThisTypeOrIdent,
-	AssignmentPattern,
-	Invalid,
+	Computed,
+	Expression,
+	ThisExpression,
+	ExpressionBase,
+	ArrayExpression,
+	ExprOrSpread,
+	ObjectExpression,
+	SpreadElement,
+	Property,
+	KeyValueProperty,
+	PropBase,
+	AssignmentProperty,
+	GetterProperty,
 	BlockStatement,
 	Statement,
 	EmptyStatement,
@@ -354,25 +299,41 @@ export const swcSchema = [
 	Declaration,
 	ClassDeclaration,
 	Class,
+	HasDecorator,
+	Decorator,
 	ClassMember,
 	Constructor,
 	TsParameterProperty,
 	Accessibility,
 	TsParameterPropertyParameter,
+	AssignmentPattern,
+	Parameter,
 	TsParameterPropertyOrParam,
 	ClassMethod,
 	ClassMethodBase,
+	Fn,
+	TsTypeParameterDeclaration,
+	TsTypeParameter,
 	MethodKind,
 	PrivateMethod,
 	PrivateName,
 	ClassProperty,
 	ClassPropertyBase,
 	PrivateProperty,
+	TsIndexSignature,
 	StaticBlock,
+	TsTypeParameterInstantiation,
 	TsExpressionWithTypeArguments,
 	FunctionDeclaration,
 	TsInterfaceDeclaration,
 	TsInterfaceBody,
+	TsTypeElement,
+	TsCallSignatureDeclaration,
+	TsConstructSignatureDeclaration,
+	TsPropertySignature,
+	TsGetterSignature,
+	TsSetterSignature,
+	TsMethodSignature,
 	TsTypeAliasDeclaration,
 	TsEnumDeclaration,
 	TsEnumMember,
@@ -383,6 +344,10 @@ export const swcSchema = [
 	TsModuleBlock,
 	TsNamespaceDeclaration,
 	ExpressionStatement,
+	SetterProperty,
+	MethodProperty,
+	SpreadElementOrProperty,
+	FunctionExpression,
 	UnaryExpression,
 	UnaryOperator,
 	UpdateExpression,
@@ -405,10 +370,13 @@ export const swcSchema = [
 	NewExpression,
 	SequenceExpression,
 	Literal,
+	BooleanLiteral,
 	NullLiteral,
+	BigIntLiteral,
 	RegExpLiteral,
 	JSXText,
 	TemplateLiteral,
+	TemplateElement,
 	TaggedTemplateExpression,
 	ArrowFunctionExpression,
 	BlockStatementOrExpression,
@@ -443,22 +411,44 @@ export const swcSchema = [
 	TsSatisfiesExpression,
 	TsInstantiation,
 	OptionalChainingExpression,
-	OptionalChainingCall,
 	MemberExpressionOrOptionalChainingCall,
-	Property,
-	KeyValueProperty,
-	PropBase,
-	AssignmentProperty,
-	GetterProperty,
-	SetterProperty,
-	MethodProperty,
-	SpreadElementOrProperty,
+	Invalid,
+	AssignmentPatternProperty,
+	TsConstructorType,
+	TsTypeReference,
+	TsEntityName,
+	TsQualifiedName,
+	TsTypeQuery,
+	TsTypeQueryExpr,
+	TsImportType,
+	TsTypeLiteral,
+	TsArrayType,
+	TsTupleType,
+	TsTupleElement,
+	TsOptionalType,
+	TsRestType,
+	TsUnionOrIntersectionType,
+	TsUnionType,
+	TsIntersectionType,
+	TsConditionalType,
+	TsInferType,
+	TsParenthesizedType,
+	TsTypeOperator,
+	TsTypeOperatorOp,
+	TsIndexedAccessType,
+	TsMappedType,
+	TruePlusMinus,
+	TsLiteralType,
+	TsLiteral,
+	TsTypePredicate,
+	TsThisTypeOrIdent,
+	ImportNamespaceSpecifier,
+	ModuleExportName,
 	ExportDeclaration,
 	ExportNamedDeclaration,
 	ExportSpecifier,
 	ExportNamespaceSpecifier,
 	ExportDefaultSpecifier,
-	NamedExportSpecifier,
 	ExportDefaultDeclaration,
 	DefaultDecl,
 	ExportDefaultExpression,

@@ -3,8 +3,8 @@ export const AssignmentPattern = {
   "@id": "AssignmentPattern",
   "@inherits": [
     "Pattern",
-    "PatternBase",
-    "TsParameterPropertyParameter"
+    "TsParameterPropertyParameter",
+    "PatternBase"
   ],
   "left": "Pattern",
   "right": "Expression"

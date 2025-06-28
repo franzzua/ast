@@ -3,6 +3,7 @@ export const FunctionExpression = {
   "@id": "FunctionExpression",
   "@inherits": [
     "Expression",
+    "Pattern",
     "Fn",
     "ExpressionBase",
     "DefaultDecl"

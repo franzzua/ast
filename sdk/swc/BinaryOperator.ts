@@ -27,5 +27,6 @@ export const BinaryOperator = {
     "instanceof",
     "**",
     "??"
-  ]
+  ],
+  "@inherits": []
 }

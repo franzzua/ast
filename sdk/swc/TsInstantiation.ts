@@ -3,6 +3,7 @@ export const TsInstantiation = {
   "@id": "TsInstantiation",
   "@inherits": [
     "Expression",
+    "Pattern",
     "Node",
     "HasSpan"
   ],

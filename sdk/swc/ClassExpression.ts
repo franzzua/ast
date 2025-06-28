@@ -3,6 +3,7 @@ export const ClassExpression = {
   "@id": "ClassExpression",
   "@inherits": [
     "Expression",
+    "Pattern",
     "Class",
     "ExpressionBase",
     "DefaultDecl"

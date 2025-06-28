@@ -1,4 +1,5 @@
 export const ModuleExportName = {
   "@type": "Class",
-  "@id": "ModuleExportName"
+  "@id": "ModuleExportName",
+  "@inherits": []
 }

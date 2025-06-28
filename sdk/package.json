@@ -16,7 +16,8 @@
     "url": "https://github.com/franzzua/ast/issues"
   },
   "dependencies": {
-    "@swc/core": "1.12.6",
+    "@biomejs/js-api": "1.0.0",
+    "@swc/core": "1.12.7",
     "@terminusdb/terminusdb-client": "10.0.33",
     "oxc-parser": "0.68.0",
     "oxc-walker": "0.2.5"
@@ -25,7 +26,6 @@
   "description": "",
   "devDependencies": {
     "@swc-node/register": "1.10.10",
-    "@swc/core": "1.11.24",
     "typescript": "^5.3.3"
   }
 }

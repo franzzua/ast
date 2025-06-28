@@ -2,11 +2,12 @@ export const BooleanLiteral = {
   "@type": "Class",
   "@id": "BooleanLiteral",
   "@inherits": [
-    "TsLiteral",
+    "Literal",
+    "Expression",
+    "Pattern",
     "Node",
     "HasSpan",
-    "Literal",
-    "Expression"
+    "TsLiteral"
   ],
   "value": "xsd:boolean"
 }

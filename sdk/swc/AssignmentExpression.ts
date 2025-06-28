@@ -3,6 +3,7 @@ export const AssignmentExpression = {
   "@id": "AssignmentExpression",
   "@inherits": [
     "Expression",
+    "Pattern",
     "ExpressionBase"
   ],
   "operator": "AssignmentOperator",

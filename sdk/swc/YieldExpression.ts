@@ -3,6 +3,7 @@ export const YieldExpression = {
   "@id": "YieldExpression",
   "@inherits": [
     "Expression",
+    "Pattern",
     "ExpressionBase"
   ],
   "argument": {

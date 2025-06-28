@@ -4,5 +4,6 @@ export const UpdateOperator = {
   "@value": [
     "++",
     "--"
-  ]
+  ],
+  "@inherits": []
 }

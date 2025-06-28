@@ -3,6 +3,7 @@ export const Literal = {
   "@id": "Literal",
   "@inherits": [
     "Expression",
+    "Pattern",
     "JSXAttrValue"
   ]
 }

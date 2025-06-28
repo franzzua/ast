@@ -1,4 +1,5 @@
 export const TsModuleReference = {
   "@type": "Class",
-  "@id": "TsModuleReference"
+  "@id": "TsModuleReference",
+  "@inherits": []
 }

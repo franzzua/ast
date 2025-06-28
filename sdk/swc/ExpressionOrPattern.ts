@@ -1,4 +1,5 @@
 export const ExpressionOrPattern = {
   "@type": "Class",
-  "@id": "ExpressionOrPattern"
+  "@id": "ExpressionOrPattern",
+  "@inherits": []
 }

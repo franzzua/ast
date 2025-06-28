@@ -15,5 +15,6 @@ export const TsKeywordTypeKind = {
     "null",
     "never",
     "intrinsic"
-  ]
+  ],
+  "@inherits": []
 }

@@ -1,4 +1,5 @@
 export const PropertyName = {
   "@type": "Class",
-  "@id": "PropertyName"
+  "@id": "PropertyName",
+  "@inherits": []
 }

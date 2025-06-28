@@ -1,4 +1,5 @@
 export const IdentifierOrPrivateNameOrComputedPropName = {
   "@type": "Class",
-  "@id": "IdentifierOrPrivateNameOrComputedPropName"
+  "@id": "IdentifierOrPrivateNameOrComputedPropName",
+  "@inherits": []
 }

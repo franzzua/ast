@@ -2,15 +2,16 @@ export const StringLiteral = {
   "@type": "Class",
   "@id": "StringLiteral",
   "@inherits": [
-    "ModuleExportName",
+    "PropertyName",
     "Node",
     "HasSpan",
-    "PropertyName",
-    "TsLiteral",
     "TsEnumMemberId",
     "TsModuleName",
     "Literal",
-    "Expression"
+    "Expression",
+    "Pattern",
+    "TsLiteral",
+    "ModuleExportName"
   ],
   "value": "xsd:string",
   "raw": {

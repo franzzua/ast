@@ -3,6 +3,7 @@ export const NewExpression = {
   "@id": "NewExpression",
   "@inherits": [
     "Expression",
+    "Pattern",
     "ExpressionBase"
   ],
   "callee": "Expression",

@@ -3,6 +3,7 @@ export const JSXNamespacedName = {
   "@id": "JSXNamespacedName",
   "@inherits": [
     "Expression",
+    "Pattern",
     "Node",
     "JSXElementName",
     "JSXAttributeName"

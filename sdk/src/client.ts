@@ -91,16 +91,18 @@ export class Client {
 				res[key] = this.convert(value, node, key);
 			}
 		}
-		// for (let schemaKey in schema) {
-		// 	if (schemaKey.startsWith('@')) continue;
-		// 	if (res[schemaKey] != null) continue;
-		// 	if (schema[schemaKey] == 'xsd:string')
-		// 		res[schemaKey] = '<NULL>';
-		// 	if (schema[schemaKey] == 'xsd:double')
-		// 		res[schemaKey] = -1;
-		// 	if (schema[schemaKey] == 'xsd:boolean')
-		// 		res[schemaKey] = false;
-		// }
+		for (let schemaKey in schema) {
+			if (schemaKey.startsWith('@')) continue;
+			if (res[schemaKey] != null) continue;
+			if (schema[schemaKey] == 'xsd:string')
+				res[schemaKey] = '';
+			if (schema[schemaKey] == 'xsd:double')
+				res[schemaKey] = 0;
+			if (schema[schemaKey] == 'xsd:boolean')
+				res[schemaKey] = false;
+			if (schema[schemaKey]?.['@type'] == 'List')
+				res[schemaKey] = [];
+		}
 		return res;
 	}
 
@@ -132,6 +134,7 @@ export class Client {
 	}
 	getSchema(nodeType: string){
 		const schema = schemaMap.get(nodeType);
+		if (!schema) throw new Error(`Node ${nodeType} not found`);
 		const result = {...schema};
 		if (schema['@inherits']){
 			if (typeof schema['@inherits'] === "string")

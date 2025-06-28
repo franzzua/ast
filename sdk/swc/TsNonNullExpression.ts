@@ -3,6 +3,7 @@ export const TsNonNullExpression = {
   "@id": "TsNonNullExpression",
   "@inherits": [
     "Expression",
+    "Pattern",
     "ExpressionBase"
   ],
   "expression": "Expression"

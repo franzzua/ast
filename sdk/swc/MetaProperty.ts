@@ -3,6 +3,7 @@ export const MetaProperty = {
   "@id": "MetaProperty",
   "@inherits": [
     "Expression",
+    "Pattern",
     "Node",
     "HasSpan"
   ],

@@ -2,8 +2,8 @@ export const RestElement = {
   "@type": "Class",
   "@id": "RestElement",
   "@inherits": [
-    "Pattern",
     "TsFnParameter",
+    "Pattern",
     "PatternBase",
     "ObjectPatternProperty"
   ],

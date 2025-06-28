@@ -4,6 +4,7 @@ export const RegExpLiteral = {
   "@inherits": [
     "Literal",
     "Expression",
+    "Pattern",
     "Node",
     "HasSpan"
   ],
