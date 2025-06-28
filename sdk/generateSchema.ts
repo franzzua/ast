@@ -1,5 +1,5 @@
 import {
-	BooleanLiteral,
+	BooleanLiteral, Identifier,
 	Module,
 	parseFileSync, StringLiteral, TsArrayType,
 	TsInterfaceDeclaration, TsKeywordType, TsLiteralType, TsParenthesizedType,
@@ -10,6 +10,7 @@ import {resolve} from "node:path";
 import {fileURLToPath} from "node:url";
 import {Node} from "@swc/types";
 import {writeFile} from "node:fs/promises";
+import {TSPropertySignature} from "oxc-parser";
 
 const file = fileURLToPath(import.meta.resolve("@swc/types"));
 
@@ -18,13 +19,14 @@ const decl = resolve(file, '../index.d.ts');
 const res = parseFileSync(decl, {
 	syntax: 'typescript',
 });
-const inheritanceMap = new Map<string, string[]>([
-]);
-function addInheritance(base, sup){
+const inheritanceMap = new Map<string, string[]>([]);
+
+function addInheritance(base, sup) {
 	const arr = inheritanceMap.get(sup) ?? [];
 	arr.push(base);
 	inheritanceMap.set(sup, arr);
 }
+
 const SchemaFactories = {
 	TsKeywordType: (typeRef: TsKeywordType) => {
 		switch (typeRef.kind) {
@@ -134,7 +136,7 @@ const SchemaFactories = {
 		return {schema, deps};
 	},
 	TsTypeAliasDeclaration(typeRef: TsTypeAliasDeclaration) {
-		if (typeRef.typeAnnotation.type === 'TsUnionType'){
+		if (typeRef.typeAnnotation.type === 'TsUnionType') {
 			return SchemaFactories.TsUnionType(typeRef.typeAnnotation, typeRef.id.value);
 		}
 		const res = getSchema(typeRef.typeAnnotation);
@@ -152,6 +154,45 @@ function getSchema(node: Node) {
 	return SchemaFactories[node.type](node);
 }
 
+const SchemaFixes = {
+	HasSpan: addProperty('ctxt', 'number'),
+	Identifier: setOptional('optional'),
+	Span: setOptional('ctxt'),
+	HasInterpreter: setOptional('interpreter'),
+}
+function addProperty(key: string, type: string){
+	return (node: TsInterfaceDeclaration) => {
+		node.body.body.push({
+			type: 'TsPropertySignature',
+			key: {value: key, type: 'Identifier'} as Identifier,
+			optional: true,
+			readonly: false,
+			computed: false,
+			span: null,
+			typeAnnotation: {
+				type: 'TsTypeAnnotation',
+				typeAnnotation: {
+					type: 'TsKeywordType',
+					kind: type,
+					span: null
+				},
+				span: null
+			}
+		});
+	}
+}
+
+function setOptional(key: string){
+	return (node: TsInterfaceDeclaration)=> {
+		const ctxtProperty = node.body.body.find(x =>
+			x.type == 'TsPropertySignature' &&
+			x.key.type == 'Identifier' &&
+			x.key.value == key
+		) as unknown as TSPropertySignature;
+		ctxtProperty.optional = true;
+	}
+}
+
 class SchemaBuilder {
 	private types = new Map<string, TsInterfaceDeclaration | TsTypeAliasDeclaration>();
 	private processed = new Set<string>();
@@ -161,6 +202,13 @@ class SchemaBuilder {
 		for (let declaration of declarations) {
 			if ('declaration' in declaration) declaration = declaration.declaration as TsInterfaceDeclaration | TsTypeAliasDeclaration;
 			this.types.set(declaration.id.value, declaration);
+		}
+		this.fixNodes();
+	}
+
+	fixNodes() {
+		for (let type in SchemaFixes) {
+			SchemaFixes[type](this.types.get(type));
 		}
 	}
 
@@ -189,20 +237,20 @@ const builder = new SchemaBuilder(res);
 const schemas = new Map([...builder.getSchemas('Module')].map(x => [x['@id'], x]));
 for (let [id, schema] of schemas) {
 	const inherit = inheritanceMap.get(id);
-	if (inherit){
-	schema['@inherits'] = [...new Set([
-		...(schema['@inherits'] ?? []),
-		...inherit
-	])]
-		}
+	if (inherit) {
+		schema['@inherits'] = [...new Set([
+			...(schema['@inherits'] ?? []),
+			...inherit
+		])]
+	}
 	const text = JSON.stringify(schema, null, '  ')
 		.replaceAll('"Param"', '"Parameter"')
 	await writeFile(`./swc/${id}.ts`, `export const ${id} = ` + text, 'utf-8');
 }
 const ids = Array.from(schemas.keys());
-const index = ids.map(id => `import { ${id} } from "./${id}";` ).join('\n')
-+`
+const index = ids.map(id => `import { ${id} } from "./${id}";`).join('\n')
+	+ `
 
-export const swcSchema = [\n\t${ids.join(',\n\t')}\n]` ;
+export const swcSchema = [\n\t${ids.join(',\n\t')}\n]`;
 
 await writeFile(`./swc/index.ts`, index, 'utf-8');

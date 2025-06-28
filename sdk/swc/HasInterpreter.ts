@@ -2,5 +2,8 @@ export const HasInterpreter = {
   "@type": "Class",
   "@id": "HasInterpreter",
   "@inherits": [],
-  "interpreter": "xsd:string"
+  "interpreter": {
+    "@type": "Optional",
+    "@class": "xsd:string"
+  }
 }

@@ -91,16 +91,16 @@ export class Client {
 				res[key] = this.convert(value, node, key);
 			}
 		}
-		for (let schemaKey in schema) {
-			if (schemaKey.startsWith('@')) continue;
-			if (res[schemaKey] != null) continue;
-			if (schema[schemaKey] == 'xsd:string')
-				res[schemaKey] = '<NULL>';
-			if (schema[schemaKey] == 'xsd:double')
-				res[schemaKey] = -1;
-			if (schema[schemaKey] == 'xsd:boolean')
-				res[schemaKey] = false;
-		}
+		// for (let schemaKey in schema) {
+		// 	if (schemaKey.startsWith('@')) continue;
+		// 	if (res[schemaKey] != null) continue;
+		// 	if (schema[schemaKey] == 'xsd:string')
+		// 		res[schemaKey] = '<NULL>';
+		// 	if (schema[schemaKey] == 'xsd:double')
+		// 		res[schemaKey] = -1;
+		// 	if (schema[schemaKey] == 'xsd:boolean')
+		// 		res[schemaKey] = false;
+		// }
 		return res;
 	}
 

@@ -36,7 +36,6 @@ describe('hello', async () => {
 
     await test('serialize', async () => {
         const program = await client.getModule(filename);
-        const parsed = await parse(code, { syntax: 'typescript' });
         const output = await transform(program, {
             sourceFileName: filename,
         });

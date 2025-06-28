@@ -4,5 +4,8 @@ export const Span = {
   "@inherits": [],
   "start": "xsd:double",
   "end": "xsd:double",
-  "ctxt": "xsd:double"
+  "ctxt": {
+    "@type": "Optional",
+    "@class": "xsd:double"
+  }
 }

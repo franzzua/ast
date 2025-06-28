@@ -19,5 +19,8 @@ export const Identifier = {
     "SpreadElementOrProperty"
   ],
   "value": "xsd:string",
-  "optional": "xsd:boolean"
+  "optional": {
+    "@type": "Optional",
+    "@class": "xsd:boolean"
+  }
 }
