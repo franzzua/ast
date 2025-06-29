@@ -15,3 +15,7 @@ export function ExportSpecifier(node: t.NamedExportSpecifier) {
 export function ExportDefaultSpecifier(node: t.ExportDefaultSpecifier) {
 	return html`default as ${AstNode.Factory(node.exported)}`;
 }
+
+export function ExportDeclaration(node: t.ExportDeclaration) {
+	return html`export <ast-node .node=${node.declaration}/>`;
+}

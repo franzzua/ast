@@ -9,9 +9,9 @@ function *getModifiers(node: t.FunctionDeclaration){
 }
 
 export function FunctionDeclaration(node: t.FunctionDeclaration){
-	const modifiers = [...getModifiers(node)].join(' ');
+	const modifiers = [...getModifiers(node)].map(s => html`<span class="keyword">${s}</span>`);
 	return html`
-		${modifiers} function ${AstNode.Factory(node.identifier)}(${AstNode.ArrayFactory(node.params)}){<br/>
+		${modifiers} <span class="keyword">function</span> ${AstNode.Factory(node.identifier)}(${AstNode.ArrayFactory(node.params)}){<br/>
 			${AstNode.Factory(node.body)}
 		}
 	`;
@@ -23,7 +23,7 @@ export function Parameter(node: t.Param){
 
 export function VariableDeclaration(node: t.VariableDeclaration){
 	return html`
-		${node.declare ? 'declare ' : ''} ${node.kind} ${AstNode.ArrayFactory(node.declarations)};
+		<span class="keyword">${node.declare ? 'declare ' : ''} ${node.kind}</span> ${AstNode.ArrayFactory(node.declarations)};
 	`;
 }
 export function VariableDeclarator(node: t.VariableDeclarator){

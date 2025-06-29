@@ -10,7 +10,7 @@ export function CallExpression(node: t.CallExpression) {
 
 export function NewExpression(node: t.NewExpression) {
 	return html`
-		new ${AstNode.Factory(node.callee)}<span>(</span>${AstNode.ArrayFactory(node.arguments)}<span>)</span>
+		<span class="keyword">new</span> ${AstNode.Factory(node.callee)}<span>(</span>${AstNode.ArrayFactory(node.arguments)}<span>)</span>
 	`;
 }
 export function BinaryExpression(node: t.BinaryExpression) {

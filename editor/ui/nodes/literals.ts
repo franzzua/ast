@@ -11,7 +11,7 @@ export function NullLiteral() {
 }
 
 export function StringLiteral(node: t.StringLiteral) {
-	return html`<span style="color: #252">${node.raw ?? '"' + node.value + '"'}</span>`;
+	return html`<span class="string">${node.raw ?? '"' + node.value + '"'}</span>`;
 }
 
 export function TemplateLiteral(node: t.TemplateLiteral){
@@ -21,7 +21,7 @@ export function TemplateLiteral(node: t.TemplateLiteral){
 			items.push(AstNode.Factory(node.expressions[i - 1]));
 		items.push(AstNode.Factory(node.quasis[i]));
 	}
-	return html`\`${items}\``;
+	return html`<span class="string">\`${items}\`</span>`;
 }
 
 export function TemplateElement(node: t.TemplateElement){

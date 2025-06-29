@@ -27,7 +27,7 @@ export class AstNode extends Component {
 		const node = this.nodeQuery.result;
 		if (!node) return html``;
 		const factory = Nodes[node.type];
-		if (!factory) return html`<span style="color: #A22; font-weight: bold;">${node.type}</span>`
+		if (!factory) return html`<span class="error-text">${node.type}</span>`
 		return factory(node);
 	}
 

@@ -1,9 +1,9 @@
 import "./ast.node";
 import "./ast.module";
 import {Module} from "./module";
-import * as ExportDeclarations from "./exports";
-import * as ImportDeclarations from "./imports";
-import * as FunctionDeclarations from "./declarations";
+import * as Exports from "./exports";
+import * as Imports from "./imports";
+import * as Declarations from "./declarations";
 import * as TsTypes from "./ts-types";
 import * as Statements from "./statements";
 import * as Expressions from "./expressions";
@@ -17,18 +17,18 @@ export const Nodes: {
 	[key in keyof typeof nodeTypes]: (node: (typeof nodeTypes)[key]) => any
 } = {
 	Module,
-	...ExportDeclarations,
-	...ImportDeclarations,
-	...FunctionDeclarations,
+	...Exports,
+	...Imports,
+	...Declarations,
 	...TsTypes,
 	...Literals,
 	...Expressions,
-	Super: () => html`<span>super</span>`,
-	Import: () => html`<span>import</span>`,
-	MetaProperty: () => html`<span>import.meta</span>`,
+	Super: () => html`<span class="keyword">super</span>`,
+	Import: () => html`<span class="keyword">import</span>`,
+	MetaProperty: () => html`<span class="keyword">import.meta</span>`,
 
 	Identifier: (node: BindingIdentifier) => {
-		return html`<span style="color: #844">${node.value}</span><ast-node .node=${node.typeAnnotation}/>`;
+		return html`<span class="variable">${node.value}</span><ast-node .node=${node.typeAnnotation}/>`;
 	},
 	Argument: (node: Argument) => AstNode.Factory(node.expression),
 	KeyValueProperty: (property: KeyValueProperty) => html`

@@ -1,0 +1,60 @@
+:root {
+    /* Dracula Theme Colors */
+
+    /* Core UI Colors */
+    --dracula-background: #282a36;   /* Main background color */
+    --dracula-foreground: #f8f8f2;   /* Main text / foreground color */
+    --dracula-current-line: #44475a; /* Background for current line or active elements */
+    --dracula-selection: #44475a;    /* Background for selected text */
+    --dracula-comment: #6272a4;      /* Color for comments, muted text */
+
+    /* Accent / Syntax Highlighting Colors */
+    --dracula-cyan: #8be9fd;         /* e.g., variables, properties, function names */
+    --dracula-green: #50fa7b;        /* e.g., strings, numbers, booleans */
+    --dracula-orange: #ffb86c;       /* e.g., classes, types, function arguments */
+    --dracula-pink: #ff79c6;         /* e.g., operators, JSX tags, keywords */
+    --dracula-purple: #bd93f9;       /* e.g., functions, keywords, control flow */
+    --dracula-red: #ff5555;          /* e.g., errors, deprecated items */
+    --dracula-yellow: #f1fa8c;       /* e.g., constants, symbols */
+
+    /* Optional: Darker selection/highlight for contrast */
+    --dracula-darker-selection: #414555;
+}
+
+/* Example Usage (optional, for demonstration) */
+body {
+    background-color: var(--dracula-background);
+    color: var(--dracula-foreground);
+    font-family: monospace;
+}
+
+h1 {
+    color: var(--dracula-purple);
+}
+
+code {
+    background-color: var(--dracula-current-line);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    color: var(--dracula-foreground); /* Default, but could use specific syntax colors */
+}
+
+.comment {
+    color: var(--dracula-comment);
+}
+
+.keyword {
+    color: var(--dracula-pink);
+}
+
+.string {
+    color: var(--dracula-green);
+}
+
+.variable {
+    color: var(--dracula-cyan);
+}
+
+.error-text {
+    color: var(--dracula-red);
+}

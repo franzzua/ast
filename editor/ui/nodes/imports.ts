@@ -5,7 +5,8 @@ import {html} from "@cmmn/uhtml";
 
 export function ImportDeclaration(node: t.ImportDeclaration) {
 	return html`
-		import ${node.typeOnly ? 'type ' : ''}{ ${AstNode.ArrayFactory(node.specifiers, ',\n')} } from ${AstNode.Factory(node.source)};
+		<span class="keyword">import</span> ${node.typeOnly ? 'type ' : ''}
+		{ ${AstNode.ArrayFactory(node.specifiers, ',\n')} } <span class="keyword">from</span> ${AstNode.Factory(node.source)};
 	`;
 }
 export function ImportSpecifier(node: t.NamedImportSpecifier) {
@@ -15,8 +16,4 @@ export function ImportSpecifier(node: t.NamedImportSpecifier) {
 }
 export function ImportDefaultSpecifier(node: t.ImportDefaultSpecifier) {
 	return html`default as ${AstNode.Factory(node.local)}`;
-}
-
-export function ExportDeclaration(node: t.ExportDeclaration) {
-	return html`export <ast-node .node=${node.declaration}/>`;
 }
