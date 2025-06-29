@@ -9,5 +9,6 @@ export const Module = {
   "body": {
     "@type": "List",
     "@class": "ModuleItem"
-  }
+  },
+  "path": "xsd:string"
 }

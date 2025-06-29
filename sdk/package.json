@@ -1,7 +1,7 @@
 {
   "name": "@ast/sdk",
   "version": "1.0.0",
-  "main": "parser.ts",
+  "main": "index.ts",
   "scripts": {
     "test": "node --test --import @swc-node/register/esm-register sdk/specs/hello.spec.ts"
   },

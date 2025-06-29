@@ -13,7 +13,10 @@
     "url": "https://github.com/franzzua/ast/issues"
   },
   "devDependencies": {
-    "@cmmn/uhtml": "3.0.0-beta-A"
+    "@cmmn/core": "3.0.0-beta-A",
+    "@cmmn/uhtml": "3.0.0-beta-A",
+    "@cmmn/ui": "3.0.0-beta-A",
+    "@swc/types": "0.1.23"
   },
   "homepage": "https://github.com/franzzua/ast#readme",
   "description": "",

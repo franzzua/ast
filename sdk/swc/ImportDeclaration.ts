@@ -16,5 +16,13 @@ export const ImportDeclaration = {
   "asserts": {
     "@type": "Optional",
     "@class": "ObjectExpression"
+  },
+  "with": {
+    "@type": "Optional",
+    "@class": "xsd:string"
+  },
+  "phase": {
+    "@type": "Optional",
+    "@class": "xsd:string"
   }
 }

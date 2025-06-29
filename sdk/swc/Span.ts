@@ -7,5 +7,6 @@ export const Span = {
   "ctxt": {
     "@type": "Optional",
     "@class": "xsd:double"
-  }
+  },
+  "@unfoldable": []
 }

@@ -19,5 +19,9 @@ export const ExportNamedDeclaration = {
   "asserts": {
     "@type": "Optional",
     "@class": "ObjectExpression"
+  },
+  "with": {
+    "@type": "Optional",
+    "@class": "xsd:string"
   }
 }

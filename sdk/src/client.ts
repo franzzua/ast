@@ -1,9 +1,8 @@
-import {WOQLClient, UTILS} from "@terminusdb/terminusdb-client";
+import {WOQLClient, UTILS, WOQL} from "@terminusdb/terminusdb-client";
 import {INode, DataNode, TypedNode} from "./dataNode";
 import {Module, Node, parse, transform, } from "@swc/core";
 import {Traverser} from "./traverser";
 import {swcSchema} from "../swc";
-import {randomBytes} from "node:crypto";
 
 const schemaMap = new Map(swcSchema.map(x => [x["@id"], x]));
 export class Client {
@@ -54,7 +53,7 @@ export class Client {
 		// const traverser = new Traverser(program);
 		// const nodes = traverser.getNodes();
 		// nodes.find(x => x["@type"] === "Program")['name'] = fileName;
-		converted['@id'] = 'Module/'+fileName;
+		converted['path'] = fileName;
 		try {
 			await this.client.addDocument(converted, {}, 'ast', 'init');
 		} catch (e) {
@@ -76,7 +75,7 @@ export class Client {
 		}
 		const res = {
 			'@type': node.type,
-			'@id': `${node.type}/${randomBytes(8).toString('base64')}`,
+			'@id': `${node.type}/${Array.from(crypto.getRandomValues(new Uint8Array(8))).map(x => x.toString(36)).join('')}`,
 		};
 		const schema = this.getSchema(node.type);
 		for (let key in node){
@@ -106,16 +105,24 @@ export class Client {
 		return res;
 	}
 
-	async convertBack(node: any){
+	async convertBack(node: any, schema = null){
 		if (!node) return node;
-		if (typeof node === "string" && node.includes('/')){
-			return await this.getNode(node);
+		if (typeof schema == "string" && !schema.startsWith('xsd:')){
+			schema = this.getSchema(schema) ?? schema;
+		}
+		if (typeof node === "string" && schema != 'xsd:string'
+			&& schema['@class'] != 'xsd:string'
+			&& schema['@type'] != 'Enum'
+			&& schema != 'TsKeywordTypeKind'){
+			// console.log(node, schema);
+			// return await this.getNode(node);
 		}
 		if (typeof node !== "object")
 			return node;
-		const res = {
+		const res =  node['@type'] == 'Span' ? {} : {
 			type: node['@type'],
 		};
+		schema ??= this.getSchema(res.type);
 		for (let key in node){
 			if (key.startsWith('@')) continue;
 			const value = node[key]
@@ -123,11 +130,13 @@ export class Client {
 			if (value === '<NULL>') { res[key] = null; continue; }
 			if (Array.isArray(value)) {
 				res[key] = [];
+				const subSchema = schema[key]['@class'];
 				for (let i = 0; i < value.length; i++) {
-					res[key][i] = await this.convertBack(value[i]);
+					res[key][i] = await this.convertBack(value[i], subSchema);
 				}
 			} else {
-				res[key] = await this.convertBack(value);
+				const subSchema = schema[key];
+				res[key] = await this.convertBack(value, subSchema);
 			}
 		}
 		return res;
@@ -155,24 +164,29 @@ export class Client {
 		return diff;
 	}
 
-	async getModule(fileName: string) {
-		return this.getNode('Module/'+fileName);
+	async getModule(fileName: string): Promise<Module> {
+		const res =await this.getNode('Module', { path: fileName });
+		delete res['path'];
+		return res;
 	}
-	async getNode(id: string) {
+	async getNode(id: string)
+	async getNode(type: string, query: object)
+	async getNode(id: string, query?: object) {
 		let tryCount = 0;
 		while (!this.cache[id]) {
 			try {
-				this.cache[id] ??= await this.client.getDocument({
-					query: {
-						'@id': id
-					},
-					type: id.split('/')[0],
+				this.cache[id] = await this.client.getDocument({
+					query,
+					type: query ? id.split('/')[0] : undefined,
+					id: query ? undefined : id,
 				}) as Node;
+				return await this.convertBack(this.cache[id]);
 			} catch (e) {
+				if (tryCount > 3)
+					throw e;
 				tryCount++;
 			}
 		}
-		return await this.convertBack(this.cache[id]);
 	}
 
 	private cache: Record<string, Node> = {};

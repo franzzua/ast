@@ -51,7 +51,7 @@ export class Client {
         // const traverser = new Traverser(program);
         // const nodes = traverser.getNodes();
         // nodes.find(x => x["@type"] === "Program")['name'] = fileName;
-        converted['@id'] = 'Module/' + fileName;
+        converted['path'] = fileName;
         try {
             await this.client.addDocument(converted, {}, 'ast', 'init');
         } catch (e) {
@@ -99,7 +99,7 @@ export class Client {
     }
     async convertBack(node) {
         if (!node) return node;
-        if (typeof node === "string" && node.includes('/')) {
+        if (typeof node === "string" && node.match(/^\w+\/[\w=]+$/)) {
             return await this.getNode(node);
         }
         if (typeof node !== "object") return node;
@@ -145,19 +145,23 @@ export class Client {
         return diff;
     }
     async getModule(fileName) {
-        return this.getNode('Module/' + fileName);
+        return this.getNode('Module', {
+            path: fileName
+        });
     }
-    async getNode(id) {
+    async getNode(id, query = {
+        '@id': id
+    }) {
         let tryCount = 0;
+        console.log(id, query);
         while(!this.cache[id]){
             try {
                 this.cache[id] ??= await this.client.getDocument({
-                    query: {
-                        '@id': id
-                    },
+                    query,
                     type: id.split('/')[0]
                 });
             } catch (e) {
+                if (tryCount > 3) throw e;
                 tryCount++;
             }
         }

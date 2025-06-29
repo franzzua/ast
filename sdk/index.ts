@@ -1,5 +1,5 @@
 export {Client} from "./src/client";
-import {parse} from "@swc/core";
+import {parse} from "@swc/wasm";
 
 export function parseAsync(content: string){
 	return parse(content, {

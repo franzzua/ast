@@ -158,13 +158,19 @@ function getSchema(node: Node) {
 }
 
 const SchemaFixes = {
+	Module: addProperty('path', 'string', false),
 	HasSpan: addProperty('ctxt', 'number', true),
 	ForOfStatement: addProperty('await', 'boolean', true),
 	Identifier: setOptional('optional'),
 	Span: setOptional('ctxt'),
 	HasInterpreter: setOptional('interpreter'),
 	OptionalChainingExpression: setOptional('questionDotToken'),
-	TsMethodSignature: setOptional('readonly')
+	TsMethodSignature: setOptional('readonly'),
+	ExportNamedDeclaration: addProperty('with', 'string', true),
+	ImportDeclaration: node => [
+		addProperty('with', 'string', true),
+		addProperty('phase', 'string', true),
+	].forEach(x => x(node))
 }
 function addProperty(key: string, type: TsKeywordTypeKind, optional: boolean){
 	return (node: TsInterfaceDeclaration) => {
@@ -273,7 +279,11 @@ class SchemaBuilder {
 	}
 
 	getModuleSchemas(){
-		const schemas = new Map([...this.getSchemas('Module')].map(x => [x['@id'], x]));
+		const schemas = new Map();
+		for (let schema of this.getSchemas('Module')) {
+			if (schemas.has(schema['@id'])) continue;
+			schemas.set(schema['@id'], schema);
+		}
 		for (let [id, schema] of schemas) {
 			const inherit = inheritanceMap.get(id) ?? [];
 			const rename = [...this.renamings.entries()].find(x => x[1] == id)?.[0];
@@ -286,6 +296,7 @@ class SchemaBuilder {
 			allInherits.delete(id);
 			schema['@inherits'] = [...allInherits];
 		}
+		schemas.get('Span')['@unfoldable'] = [];
 		return schemas;
 	}
 }
